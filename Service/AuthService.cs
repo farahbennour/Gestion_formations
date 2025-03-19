@@ -18,12 +18,12 @@
             _config = configuration;
         }
 
-        // Inscription d'un nouvel utilisateur avec hashage du mot de passe
+       
         public bool RegisterUser(User user, string password)
         {
             if (_userRepository.GetByEmail(user.Email) != null)
             {
-                return false; // L'utilisateur existe déjà
+                return false; 
             }
 
             // Hashage du mot de passe avec BCrypt
@@ -34,43 +34,33 @@
         }
 
 
-        // Méthode d'authentification de l'utilisateur avec l'email et le mot de passe
-        //public string Authenticate(string email, string password)
-        //{
-        //    var user = _userRepository.GetByEmail(email);
-
-        //    if (user == null)
-        //    {
-        //        Console.WriteLine("Utilisateur non trouvé"); // Debug log
-        //        return null; // L'utilisateur n'existe pas
-        //    }
-
-        //    // Vérifie que le mot de passe haché correspond à celui stocké
-        //    if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-        //    {
-        //        Console.WriteLine("Mot de passe incorrect"); // Debug log
-        //        return null; // Mot de passe incorrect
-        //    }
-
-        //    // Si tout est bon, génère le token JWT
-        //    return GenerateJwtToken(user);
-        //}
         public string Authenticate(string email, string password)
         {
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                return null; // Assure-toi de renvoyer null si l'email ou le mot de passe sont vides
+                return null; 
             }
 
             var user = _userRepository.GetByEmail(email);
             if (user == null)
-                return null; // L'utilisateur n'existe pas
+                return null; 
 
             if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-                return null; // Mot de passe incorrect
+                return null; 
 
             var token = GenerateJwtToken(user);
             return token;
+        }
+        public bool VerifyPassword(User user, string password)
+        {
+            
+            if (user == null || string.IsNullOrEmpty(user.PasswordHash))
+            {
+                return false;
+            }
+
+           
+            return BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
         }
 
 
@@ -81,8 +71,8 @@
             var claims = new[]
             {
         new Claim(ClaimTypes.Name, user.Username),
-        new Claim(ClaimTypes.Email, user.Email),  // Inclure l'email
-        new Claim(ClaimTypes.Role, user.Role)  // Le rôle de l'utilisateur
+        new Claim(ClaimTypes.Email, user.Email),  
+        new Claim(ClaimTypes.Role, user.Role)  
     };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:SecretKey"]));

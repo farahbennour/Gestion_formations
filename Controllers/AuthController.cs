@@ -1,178 +1,13 @@
-﻿//namespace Gestion_Formations.Controllers
-//{
-//    using Gestion_Formations.Models;
-//    using Gestion_Formations.Repertoires;
-//    using Gestion_Formations.Service;
-//    using Microsoft.AspNetCore.Mvc;
-//    using System.Net.Mail;
-
-//    [Route("auth")]
-//    public class AuthController : Controller
-//    {
-//        private readonly IAuthService _authService;
-//        private readonly IUserRepository _userRepository;
-
-//        public AuthController(IAuthService authService, IUserRepository userRepository)
-//        {
-//            _authService = authService;
-//            _userRepository = userRepository;
-//        }
-
-
-//        // Affiche la vue de l'inscription
-//        [HttpGet("signup")]
-//        public IActionResult Signup()
-//        {
-//            return View();  // Affiche la page Signup.cshtml
-//        }
-
-//        [HttpGet("Dashboard")]
-//        public IActionResult Dashboard()
-//        {
-//            return View();  // Affiche la page Signup.cshtml
-//        }
-//        // Gère le formulaire d'inscription
-//        [HttpPost("signup")]
-//        public IActionResult Signup([FromBody] RegisterModel model)
-//        {
-//            Console.WriteLine($"Email reçu: {model.Email}");  // Log pour vérifier l'email
-
-//            if (!IsValidEmail(model.Email))
-//            {
-//                return BadRequest("L'email n'est pas valide.");
-//            }
-
-//            var user = new User
-//            {
-//                Username = model.Username,
-//                Role = model.Role,
-//                Email = model.Email
-//            };
-
-//            var result = _authService.RegisterUser(user, model.Password);
-
-//            if (!result)
-//                return BadRequest("L'utilisateur existe déjà.");
-
-//            return RedirectToAction("Login");
-//        }
-
-
-//        // Méthode pour vérifier si l'email est valide
-//        private bool IsValidEmail(string email)
-//        {
-//            if (string.IsNullOrEmpty(email))
-//            {
-//                return false; // L'email est vide ou null, retourne false
-//            }
-
-//            var emailRegex = new System.Text.RegularExpressions.Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-//            return emailRegex.IsMatch(email);
-//        }
-
-
-//        // Affiche la vue de connexion
-//        [HttpGet("login")]
-//        public IActionResult Login()
-//        {
-//            return View();  // Affiche la page Login.cshtml
-//        }
-
-//        // Gère le formulaire de connexion
-//        //    [HttpPost("login")]
-//        //    public IActionResult Login([FromBody] LoginModel model)
-//        //    {
-//        //        if (model == null)
-//        //        {
-//        //            return BadRequest("Les informations de connexion sont manquantes.");
-//        //        }
-
-//        //        if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
-//        //        {
-//        //            return BadRequest("L'email et le mot de passe sont requis.");
-//        //        }
-
-//        //        Console.WriteLine($"Email: {model.Email}");  // Affiche l'email pour vérifier
-
-//        //        var token = _authService.Authenticate(model.Email, model.Password);
-
-//        //        if (token == null)
-//        //            return Unauthorized("Email ou mot de passe incorrect");
-
-//        //        Console.WriteLine($"Token généré : {token}");
-
-//        //        // Récupérer l'utilisateur (pour vérifier son rôle, par exemple)
-//        //        var user = _userRepository.GetByEmail(model.Email);
-
-//        //        if (user == null)
-//        //            return Unauthorized("Utilisateur non trouvé");
-
-//        //        // Exemple : Rediriger vers le Dashboard en fonction du rôle
-//        //        if (user.Role == "Admin")
-//        //            return RedirectToAction("Dashboard", "Home"); // Redirige vers le Dashboard
-
-//        //        return RedirectToAction("Index", "Home");  // Redirige vers la page d'accueil (ou autre)
-//        //    }
-//        //}
-//        [HttpPost("login")]
-//        public IActionResult Login([FromBody] LoginModel model)
-//        {
-//            if (model == null || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
-//            {
-//                return BadRequest("Email et mot de passe sont requis.");
-//            }
-
-//            Console.WriteLine($"Email: {model.Email}");
-
-//            var token = _authService.Authenticate(model.Email, model.Password);
-
-//            if (token == null)
-//            {
-//                return Unauthorized("Email ou mot de passe incorrect");
-//            }
-
-//            Console.WriteLine($"Token généré : {token}");
-
-//            var user = _userRepository.GetByEmail(model.Email);
-
-//            if (user == null)
-//            {
-//                return Unauthorized("Utilisateur non trouvé");
-//            }
-
-//            if (string.IsNullOrEmpty(user.Role))
-//            {
-//                return Unauthorized("Rôle non défini pour cet utilisateur");
-//            }
-
-//            // Redirection basée sur le rôle
-//            if (user.Role == "Admin")
-//                return RedirectToAction("Dashboard"); // Exemple pour admin
-
-//            return RedirectToAction("Index", "Home"); // Autre redirection pour les autres rôles
-//        }
-//    }
-//        public class LoginModel
-//    {
-//        public string Email { get; set; }
-//        public string Password { get; set; }
-//    }
-
-//    public class RegisterModel
-//    {
-//        public string Username { get; set; }
-//        public string Password { get; set; }
-//        public string Role { get; set; } // "Apprenant" ou "Formateur"
-//        public string Email { get; set; }
-//    }
-//}
-
-
+﻿
 namespace Gestion_Formations.Controllers
 {
+    using System.Security.Claims;
     using Gestion_Formations.Models;
     using Gestion_Formations.Repertoires;
     using Gestion_Formations.Service;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("auth")]
@@ -187,20 +22,32 @@ namespace Gestion_Formations.Controllers
             _userRepository = userRepository;
         }
 
-        // Affiche la vue de l'inscription
+    
         [HttpGet("signup")]
         public IActionResult Signup()
         {
-            return View();  // Affiche la page Signup.cshtml
+            return View();  
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("Dashboard")]
+
         public IActionResult Dashboard()
         {
-            return View();  // Affiche la page Dashboard.cshtml
+            var user = HttpContext.User;
+            var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
+
+            Console.WriteLine("Rôles de l'utilisateur : " + string.Join(", ", roles));
+
+            return View();
         }
 
-        // Gère le formulaire d'inscription
+
+
+
+
+
+       
         [HttpPost("signup")]
         public IActionResult Signup([FromBody] RegisterModel model)
         {
@@ -241,60 +88,96 @@ namespace Gestion_Formations.Controllers
             return emailRegex.IsMatch(email);
         }
 
-        // Affiche la vue de connexion
+
         [HttpGet("login")]
         public IActionResult Login()
         {
-            return View();  // Affiche la page Login.cshtml
+            return View();  
         }
 
-        // Gère le formulaire de connexion
+        
         [HttpPost("login")]
-        public IActionResult Login([FromForm] LoginModel model)
+        public async Task<IActionResult> Login([FromForm] LoginModel model)
         {
-            if (model == null || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
-            {
-                return BadRequest("Email et mot de passe sont requis.");
-            }
+            var user = _userRepository.GetByEmail(model.Email);
 
-            // Authentification de l'utilisateur
+
+            Console.WriteLine($"Email: {model.Email}");  
+
             var token = _authService.Authenticate(model.Email, model.Password);
 
             if (token == null)
-            {
                 return Unauthorized("Email ou mot de passe incorrect");
-            }
 
-            var user = _userRepository.GetByEmail(model.Email);
 
-            if (user == null)
-            {
-                return Unauthorized("Utilisateur non trouvé");
-            }
+          
+            HttpContext.Session.SetString("Username", user.Username);
+            HttpContext.Session.SetString("Token", token);  
+            Console.WriteLine($"Token stocké en session : {token}");
 
-            // Gérer la redirection en fonction du rôle
+            var claims = new List<Claim>
+                 {
+                         new Claim(ClaimTypes.Name, user.Email),
+                         new Claim(ClaimTypes.Role, user.Role)
+                  };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal,
+                new AuthenticationProperties { IsPersistent = true }
+            );
+
             if (user.Role == "Admin")
+                return RedirectToAction("Dashboard", "Auth");
+            else
+                return RedirectToAction("Index", "Home");
+
+
+        }
+
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+           
+            var token = HttpContext.Session.GetString("Token");
+
+            if (!string.IsNullOrEmpty(token))
             {
-                return RedirectToAction("Dashboard", "Auth");  // Redirige vers la page Dashboard pour l'admin
+                Console.WriteLine($"[LOGOUT] Token trouvé : {token}");
             }
             else
             {
-                return RedirectToAction("Index", "Home");  // Redirige vers la page d'accueil pour les autres utilisateurs
+                Console.WriteLine("[LOGOUT] Aucun token trouvé en session.");
             }
+
+            HttpContext.Session.Remove("Token");
+            Console.WriteLine($"[LOGOUT] Token detruit : {token}");
+            HttpContext.Session.Remove("Username");
+
+          
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+           
+            return RedirectToAction("Login", "Auth");
         }
-    }
 
-    public class LoginModel
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
 
-    public class RegisterModel
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }  // "Apprenant" ou "Formateur"
-        public string Email { get; set; }
+        public class LoginModel
+        {
+            public string Email { get; set; }
+            public string Password { get; set; }
+        }
+
+        public class RegisterModel
+        {
+            public string Username { get; set; }
+            public string Password { get; set; }
+            public string Role { get; set; }  // "Apprenant" ou "Formateur"
+            public string Email { get; set; }
+        }
     }
 }

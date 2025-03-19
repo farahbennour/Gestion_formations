@@ -1,6 +1,25 @@
-﻿@{
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+@{
     ViewData["Title"] = "Dashboard";
+    var username = HttpContextAccessor.HttpContext?.Session.GetString("Username");
+    var token = HttpContextAccessor.HttpContext?.Session.GetString("Token");
 }
 
 <h2>Bienvenue sur le Dashboard</h2>
+
+@if (!string.IsNullOrEmpty(username))
+{
+    <p>Bonjour, @username !</p>
+}
+@* <p>Token dans la session : @HttpContextAccessor.HttpContext?.Session.GetString("Token")</p> *@
+
 <p>Ceci est votre tableau de bord, où vous pouvez gérer vos informations.</p>
+
+<form asp-controller="Auth" asp-action="Logout" method="post">
+    @if (!string.IsNullOrEmpty(token))
+    {
+        <input type="hidden" name="Token" value="@token" />
+    }
+    <button type="submit" class="btn btn-danger">Déconnexion</button>
+</form>
