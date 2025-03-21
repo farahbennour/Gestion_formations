@@ -1,33 +1,150 @@
 ﻿@{
     ViewData["Title"] = "Signup";
 }
-
+<link rel="stylesheet" href="~/css/style.css" />
 <h2>Signup</h2>
 
-<form asp-action="Signup" method="post">
+<!-- Modal pour choisir le type d'utilisateur -->
+<div id="userTypeModal" class="modal" tabindex="-1" role="dialog" style="display: block;">
+    <div class="modal-overlay"></div> <!-- Superposition de fond -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Vous êtes :</h5>
+            </div>
+            <div class="modal-body">
+                <select id="UserType" class="form-control" required>
+                    <option value="">Sélectionner</option>
+                    <option value="Apprenant">Apprenant</option>
+                    <option value="Formateur">Formateur</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirmUserType">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Formulaire d'inscription -->
+<form asp-controller="Auth" asp-action="Signup" method="post" id="signupForm" style="display: none;">
     <div class="form-group">
         <label for="Username">Nom d'utilisateur</label>
         <input type="text" id="Username" name="Username" class="form-control" required />
     </div>
     <div class="form-group">
         <label for="Email">Adresse Mail</label>
-        <input type="text" id="Email" name="Email" class="form-control" required />
+        <input type="email" id="Email" name="Email" class="form-control" required />
     </div>
-
     <div class="form-group">
-        <label for="Password">Mot de passe</label>
-        <input type="password" id="Password" name="Password" class="form-control" required />
+        <label for="PasswordHash">Mot de passe</label>
+        <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" required />
     </div>
-
     <div class="form-group">
-        <label for="Role">Rôle</label>
-        <select id="Role" name="Role" class="form-control" required>
-            <option value="Apprenant">Apprenant</option>
-            <option value="Formateur">Formateur</option>
-        </select>
+        <label for="Telephone">Téléphone</label>
+        <input type="text" id="Telephone" name="Telephone" class="form-control" required />
     </div>
-
+    <div class="form-group">
+        <label for="Adresse">Adresse</label>
+        <input type="text" id="Adresse" name="Adresse" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="DateNaissance">Date de naissance</label>
+        <input type="date" id="DateNaissance" name="DateNaissance" class="form-control" required />
+    </div>
+    <div class="form-group" id="dateInscriptionField">
+        <label for="DateInscription">Date d'inscription</label>
+        <input type="date" id="DateInscription" name="DateInscription" class="form-control" required />
+    </div>
+    <div class="form-group" id="dateEmbaucheField" style="display: none;">
+        <label for="DateEmbauche">Date d'embauche</label>
+        <input type="date" id="DateEmbauche" name="DateEmbauche" class="form-control" required />
+    </div>
+    <div class="form-group" id="specialiteField" style="display: none;">
+        <label for="Specialite">Spécialité</label>
+        <input type="text" id="Specialite" name="Specialite" class="form-control" required />
+    </div>
+    <div class="form-group" id="experienceField" style="display: none;">
+        <label for="Experience">Expérience (années)</label>
+        <input type="number" id="Experience" name="Experience" class="form-control" required />
+    </div>
+    <input type="hidden" id="Role" name="Role" />
     <button type="submit" class="btn btn-primary">S'inscrire</button>
 </form>
 
 <p>Déjà un compte ? <a href="/Auth/Login">Connectez-vous ici</a></p>
+
+<script>
+    // Gestion de la confirmation du type d'utilisateur
+    document.getElementById('confirmUserType').addEventListener('click', function () {
+        var userType = document.getElementById('UserType').value;
+        var modal = document.getElementById('userTypeModal');
+        var form = document.getElementById('signupForm');
+        var specialiteField = document.getElementById('specialiteField');
+        var experienceField = document.getElementById('experienceField');
+        var dateEmbaucheField = document.getElementById('dateEmbaucheField');
+
+        if (userType) {
+            modal.style.display = 'none';
+            form.style.display = 'block';
+
+            if (userType === 'Formateur') {
+                specialiteField.style.display = 'block';
+                experienceField.style.display = 'block';
+                dateEmbaucheField.style.display = 'block';
+            } else {
+                specialiteField.style.display = 'none';
+                experienceField.style.display = 'none';
+                dateEmbaucheField.style.display = 'none';
+            }
+              document.getElementById('Role').value = userType;
+        } else {
+            alert('Veuillez choisir un type d\'utilisateur.');
+        }
+    });
+
+    // Validation avant soumission du formulaire
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        var userType = document.getElementById('UserType').value;
+        if (!userType) {
+            e.preventDefault(); // Empêche la soumission du formulaire
+            alert('Veuillez choisir un type d\'utilisateur.');
+        }
+    });
+</script>
+
+<style>
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center; /* Centre verticalement */
+        justify-content: center; /* Centre horizontalement */
+        z-index: 1000;
+    }
+
+    .modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    }
+
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        z-index: 1001;
+        width: 90%;
+        max-width: 400px; /* Largeur maximale pour les grands écrans */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+        position: relative;
+        transform: translateX(+15%); /* Décalage de 20% vers la gauche */
+    }
+</style>
+

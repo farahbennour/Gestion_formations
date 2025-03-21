@@ -47,13 +47,48 @@ namespace Gestion_Formations.Controllers
 
 
 
-       
+
+        //[HttpPost("signup")]
+        //public IActionResult Signup([FromForm] RegisterModel model)
+        //{
+        //    if (model == null || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.PasswordHash))
+        //    {
+        //        return BadRequest("Les informations de l'utilisateur sont manquantes.");
+        //    }
+
+        //    if (!IsValidEmail(model.Email))
+        //    {
+        //        return BadRequest("L'email n'est pas valide.");
+        //    }
+
+        //    var user = new User
+        //    {
+        //        Username = model.Username,
+        //        Role = model.Role,
+        //        Email = model.Email
+        //    };
+
+        //    var result = _authService.RegisterUser(user, model.PasswordHash);
+
+        //    if (!result)
+        //        return BadRequest("L'utilisateur existe déjà.");
+
+        //    return RedirectToAction("Login");
+        //}
+
         [HttpPost("signup")]
-        public IActionResult Signup([FromBody] RegisterModel model)
+        public IActionResult Signup([FromForm] RegisterModel model)
         {
-            if (model == null || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+            if (model == null)
             {
                 return BadRequest("Les informations de l'utilisateur sont manquantes.");
+            }
+
+            if (string.IsNullOrEmpty(model.Username) ||
+                string.IsNullOrEmpty(model.Email) ||
+                string.IsNullOrEmpty(model.PasswordHash))
+            {
+                return BadRequest("Tous les champs obligatoires doivent être remplis.");
             }
 
             if (!IsValidEmail(model.Email))
@@ -65,16 +100,26 @@ namespace Gestion_Formations.Controllers
             {
                 Username = model.Username,
                 Role = model.Role,
-                Email = model.Email
+                Email = model.Email,
+                Telephone = model.Telephone ?? "", // Éviter null
+                Adresse = model.Adresse ?? "",
+                DateNaissance = model.DateNaissance,
+                DateInscription = model.DateInscription ,
+                DateEmbauche = model.DateEmbauche,
+                Specialite = model.Specialite ?? "",
+                Experience = model.Experience ?? 0,
+                Status = model.Status ?? "Active"
             };
 
-            var result = _authService.RegisterUser(user, model.Password);
+            var result = _authService.RegisterUser(user, model.PasswordHash);
 
             if (!result)
                 return BadRequest("L'utilisateur existe déjà.");
 
             return RedirectToAction("Login");
         }
+
+
 
         // Vérifie si l'email est valide
         private bool IsValidEmail(string email)
@@ -175,9 +220,18 @@ namespace Gestion_Formations.Controllers
         public class RegisterModel
         {
             public string Username { get; set; }
-            public string Password { get; set; }
-            public string Role { get; set; }  // "Apprenant" ou "Formateur"
             public string Email { get; set; }
+            public string PasswordHash { get; set; }
+            public string? Telephone { get; set; }
+            public string? Adresse { get; set; }
+            public DateOnly? DateNaissance { get; set; }
+            public DateOnly? DateInscription { get; set; }
+            public DateOnly? DateEmbauche { get; set; }
+           
+            public string Role { get; set; }
+            public string? Specialite { get; set; }
+            public int? Experience { get; set; }
+            public string Status { get; set; } = "Active";
         }
     }
 }

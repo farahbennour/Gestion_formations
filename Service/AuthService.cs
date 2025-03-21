@@ -28,6 +28,15 @@
 
             // Hashage du mot de passe avec BCrypt
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
+            // Vérification et initialisation des champs pour éviter les erreurs de "NULL"
+            user.Telephone ??= "";
+            user.Adresse ??= "";
+            user.DateNaissance ??= DateOnly.MinValue;
+            user.DateInscription ??= DateOnly.MinValue; // Par défaut, la date d'inscription est la date actuelle
+            user.DateEmbauche ??= DateOnly.MinValue;
+            user.Specialite ??= "";
+            user.Experience ??= 0;
+
 
             _userRepository.Add(user);
             return true;
