@@ -31,6 +31,8 @@ namespace Gestion_Formations.Models
         [Required]
         public int? Experience { get; set; }
 
+        public ICollection<UserSession> UserSessions { get; set; } = new List<UserSession>();
+
 
 
     }

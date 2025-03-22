@@ -2,7 +2,9 @@ using System.Security.Claims;
 using System.Text;
 using Gestion_Formations.Models;
 using Gestion_Formations.Repertoires;
+
 using Gestion_Formations.Service;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +53,8 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IFormationRepository, FormationRepository>();
+//builder.Services.AddScoped<FormationService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDistributedMemoryCache();
 

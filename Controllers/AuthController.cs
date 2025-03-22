@@ -222,14 +222,14 @@ namespace Gestion_Formations.Controllers
             public string Username { get; set; }
             public string Email { get; set; }
             public string PasswordHash { get; set; }
-            public string? Telephone { get; set; }
-            public string? Adresse { get; set; }
-            public DateOnly? DateNaissance { get; set; }
-            public DateOnly? DateInscription { get; set; }
-            public DateOnly? DateEmbauche { get; set; }
+            public string Telephone { get; set; }
+            public string Adresse { get; set; }
+            public DateOnly DateNaissance { get; set; }
+            public DateOnly DateInscription { get; set; }
+            public DateOnly DateEmbauche { get; set; }
            
             public string Role { get; set; }
-            public string? Specialite { get; set; }
+            public string Specialite { get; set; }
             public int? Experience { get; set; }
             public string Status { get; set; } = "Active";
         }

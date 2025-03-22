@@ -101,6 +101,24 @@
         } else {
             alert('Veuillez choisir un type d\'utilisateur.');
         }
+            if (userType === 'Formateur') {
+        specialiteField.style.display = 'block';
+        experienceField.style.display = 'block';
+        dateEmbaucheField.style.display = 'block';
+        // Ajoutez le required ici si nécessaire
+        document.getElementById('Specialite').required = true;
+        document.getElementById('Experience').required = true;
+        document.getElementById('DateEmbauche').required = true;
+    } else {
+        specialiteField.style.display = 'none';
+        experienceField.style.display = 'none';
+        dateEmbaucheField.style.display = 'none';
+        // Retirer le required des champs cachés
+        document.getElementById('Specialite').required = false;
+        document.getElementById('Experience').required = false;
+        document.getElementById('DateEmbauche').required = false;
+    }
+
     });
 
     // Validation avant soumission du formulaire
