@@ -1,90 +1,138 @@
 ﻿using Gestion_Formations.Models;
-using Gestion_Formations.Repertoires;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+using Gestion_Formations.Models;
 
-[Route("formations")]
-  // Vérification du rôle directement ici
-public class FormationsController : Controller
+namespace Gestion_Formations.Controllers
 {
-    private readonly IFormationRepository _formationRepository;
-    private readonly IHttpClientFactory _httpClientFactory;
-
-    public FormationsController(IFormationRepository formationRepository, IHttpClientFactory httpClientFactory)
+    [Route("formations")]
+    public class FormationController : Controller
     {
-        _formationRepository = formationRepository;
-        _httpClientFactory = httpClientFactory;
-    }
+        private readonly ApplicationDbContext _context;
 
-    // GET: formations/create
-    [HttpGet("create")]
-    public IActionResult Create()
-    {
-        var token = HttpContext.Session.GetString("Token");
-       // Récupère le token de la session
-        if (string.IsNullOrEmpty(token))
+        public FormationController(ApplicationDbContext context)
         {
-            return RedirectToAction("Login", "Auth");  // Redirige vers la page de login si le token est absent
+            _context = context;
         }
 
-        // Validez le token ici si nécessaire (par exemple en appelant une API pour vérifier le token)
-
-        return View();
-    }
-
-    // POST: formations/create
-    [HttpPost("create")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([FromForm] Formation model)
-    {
-        if (model == null)
+        [HttpGet]
+        // GET: Formation
+        public async Task<IActionResult> Index()
         {
-            return BadRequest("Les informations de la formation sont manquantes.");
+            return View("~/Views/Formation/Index.cshtml");
         }
 
-        if (string.IsNullOrEmpty(model.Nom) || string.IsNullOrEmpty(model.Description))
+        [HttpGet("create")]
+        [Authorize(Roles = "Admin")]
+
+        public IActionResult Create()
         {
-            return BadRequest("Tous les champs obligatoires doivent être remplis.");
+            return View();
         }
 
-        // Vérifier que l'utilisateur a le rôle Admin à partir du token JWT
-        var token = HttpContext.Session.GetString("Token");
-        Console.WriteLine($"[LOGOUT] Token trouvé : {token}");// Récupère le token de la session
-        if (string.IsNullOrEmpty(token))
+        // POST: Formation/Create
+        [HttpPost("create")]
+        //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create([Bind("Id,Nom,Description,DateCreation")] Formation formation)
         {
-            return RedirectToAction("Login", "Auth");  // Si le token est absent, redirige vers login
+            if (!ModelState.IsValid)
+            {
+                _context.Add(formation);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
 
-        var userRole = GetUserRoleFromToken(token); // Décodez ou validez le rôle à partir du token JWT
-        if (userRole != "Admin")
+        // GET: Formation/Edit/5
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int? id)
         {
-            return Forbid(); // Si l'utilisateur n'a pas le rôle "Admin", on lui interdit l'accès
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var formation = await _context.Formations.FindAsync(id);
+            if (formation == null)
+            {
+                return NotFound();
+            }
+            return View(formation);
         }
 
-        // Créer la formation dans la base de données
-        _formationRepository.AddFormation(model);
-        await _formationRepository.SaveChangesAsync();
+        // POST: Formation/Edit/5
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titre,Description,Duree")] Formation formation)
+        {
+            if (id != formation.Id)
+            {
+                return NotFound();
+            }
 
-        return RedirectToAction(nameof(Index));  // Redirige vers la liste des formations après la création
-    }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(formation);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!FormationExists(formation.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(formation);
+        }
 
-    private string GetUserRoleFromToken(string token)
-    {
-        // Logique pour décoder le token JWT et récupérer le rôle
-        // Vous pouvez utiliser une bibliothèque comme `System.IdentityModel.Tokens.Jwt` pour décoder le token
-        var handler = new JwtSecurityTokenHandler();
-        var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
-        var role = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-        return role;
-    }
+        // GET: Formation/Delete/5
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-    // GET: formations
-    [HttpGet("index")]
-    public async Task<IActionResult> Index()
-    {
-        var formations = await _formationRepository.GetAllFormationsAsync();
-        return View(formations);  // Retourne la liste des formations à la vue
+            var formation = await _context.Formations
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (formation == null)
+            {
+                return NotFound();
+            }
+
+            return View(formation);
+        }
+
+        // POST: Formation/Delete/5
+        [HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var formation = await _context.Formations.FindAsync(id);
+            _context.Formations.Remove(formation);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool FormationExists(int id)
+        {
+            return _context.Formations.Any(e => e.Id == id);
+        }
     }
 }

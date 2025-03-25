@@ -46,7 +46,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
 });
 
 // Ajout des services nécessaires
@@ -56,6 +56,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IFormationRepository, FormationRepository>();
 //builder.Services.AddScoped<FormationService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
+
 builder.Services.AddDistributedMemoryCache();
 
 // Configuration de la session
