@@ -293,10 +293,10 @@ C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.Gestion_Formations.props
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.Gestion_Formations.props
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\staticwebassets.pack.json
-C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\Gestion_.4217DA88.Up2Date
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\Gestion_Formations.dll
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\refint\Gestion_Formations.dll
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\Gestion_Formations.pdb
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\Gestion_Formations.genruntimeconfig.cache
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\ref\Gestion_Formations.dll
+C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

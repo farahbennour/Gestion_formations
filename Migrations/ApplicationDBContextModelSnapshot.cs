@@ -19,13 +19,28 @@ namespace Gestion_Formations.Migrations
                 .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("FormationUser", b =>
+                {
+                    b.Property<int>("FormationsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FormationsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("FormationUser");
+                });
+
             modelBuilder.Entity("Gestion_Formations.Models.Formation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateCreation")
+                    b.Property<DateTime>("Date_Heure")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
@@ -39,32 +54,6 @@ namespace Gestion_Formations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Formations");
-                });
-
-            modelBuilder.Entity("Gestion_Formations.Models.Session", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("DateDebut")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("DateFin")
-                        .HasColumnType("date");
-
-                    b.Property<int>("FormationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Lieu")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FormationId");
-
-                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("Gestion_Formations.Models.User", b =>
@@ -126,64 +115,19 @@ namespace Gestion_Formations.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Gestion_Formations.Models.UserSession", b =>
+            modelBuilder.Entity("FormationUser", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SessionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "SessionId");
-
-                    b.HasIndex("SessionId");
-
-                    b.ToTable("UserSessions");
-                });
-
-            modelBuilder.Entity("Gestion_Formations.Models.Session", b =>
-                {
-                    b.HasOne("Gestion_Formations.Models.Formation", "Formation")
-                        .WithMany("Sessions")
-                        .HasForeignKey("FormationId")
+                    b.HasOne("Gestion_Formations.Models.Formation", null)
+                        .WithMany()
+                        .HasForeignKey("FormationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Formation");
-                });
-
-            modelBuilder.Entity("Gestion_Formations.Models.UserSession", b =>
-                {
-                    b.HasOne("Gestion_Formations.Models.Session", "Session")
-                        .WithMany("UserSessions")
-                        .HasForeignKey("SessionId")
+                    b.HasOne("Gestion_Formations.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Gestion_Formations.Models.User", "User")
-                        .WithMany("UserSessions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Session");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Gestion_Formations.Models.Formation", b =>
-                {
-                    b.Navigation("Sessions");
-                });
-
-            modelBuilder.Entity("Gestion_Formations.Models.Session", b =>
-                {
-                    b.Navigation("UserSessions");
-                });
-
-            modelBuilder.Entity("Gestion_Formations.Models.User", b =>
-                {
-                    b.Navigation("UserSessions");
                 });
 #pragma warning restore 612, 618
         }

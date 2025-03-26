@@ -1,0 +1,18 @@
+﻿@model Gestion_Formations.Models.Formation
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">ID:</dt>
+        <dd class="col-sm-8">@Model.Id</dd>
+
+        <dt class="col-sm-4">Name:</dt>
+        <dd class="col-sm-8">@Model.Nom</dd>
+
+        <dt class="col-sm-4">Description:</dt>
+        <dd class="col-sm-8">@Model.Description</dd>
+
+        <dt class="col-sm-4">Date et Heure:</dt>
+        <dd class="col-sm-8">@Model.Date_Heure.ToString("d")</dd>
+    </dl>
+
+</div>

@@ -1,0 +1,15 @@
+﻿@model Gestion_Formations.Models.Formation
+
+<div>
+    <h4>Are you sure you want to delete this?</h4>
+    @* <p class="text-danger">This action cannot be undone!</p> *@
+    <dl class="row">
+        <dt class="col-sm-4">Name:</dt>
+        <dd class="col-sm-8">@Model.Nom</dd>
+    </dl>
+
+    <div class="text-right">
+        <input type="button" value="Cancel" class="btn btn-warning" data-dismiss="modal" onclick="window.location.href='/formations/List'" />
+        <button type="button" class="btn btn-danger" onclick="confirmDelete(@Model.Id)">Confirm Delete</button>
+    </div>
+</div>

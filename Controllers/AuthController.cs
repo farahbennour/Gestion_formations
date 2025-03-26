@@ -96,7 +96,9 @@
                 return Unauthorized("Email ou mot de passe incorrect");
 
             HttpContext.Session.SetString("Username", user.Username);
+            Console.WriteLine($"Username : {user.Username}");
             HttpContext.Session.SetString("Token", token);
+            Console.WriteLine($" Token : {token}");
 
             var claims = new List<Claim>
             {

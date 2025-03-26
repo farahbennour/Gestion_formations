@@ -5,9 +5,9 @@
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Description { get; set; }
-        public DateTime DateCreation { get; set; }
+        public DateTime Date_Heure { get; set; }
 
-        // Navigation property
-        public ICollection<Session> Sessions { get; set; }
+        // Navigation property pour la relation plusieurs à plusieurs avec User
+        public ICollection<User> Users { get; set; } = new List<User>();
     }
 }

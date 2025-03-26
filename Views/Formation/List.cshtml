@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Gestion_Formations.Models.Formation>
+
+@{
+    ViewData["Title"] = "List";
+}
+<link rel="stylesheet" href="~/css/style.css" />
+
+<h1>List of Trainings</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<!-- Modal Container -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="actionModalLabel"></h5>
+            </div>
+            <div class="modal-body" id="actionModalBody">
+                <!-- Le contenu du formulaire sera injecté ici -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().Id)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Nom)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Description)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Date_Heure)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date_Heure)</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm"
+                                onclick="showModal('Details', @item.Id)">
+                            Details
+                        </button>
+                        <button class="btn btn-info btn-sm"
+                                onclick="showModal('Edit', @item.Id)">
+                            Edit
+                        </button>
+
+                        <button class="btn btn-danger btn-sm"
+                                onclick="showModal('Delete', @item.Id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">No trainings available.</p>
+}
+
+@section Scripts {
+    <script>
+                  function showModal(action, id) {
+            const url = `/formations/${action}/${id}`; // URL en minuscules
+
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('actionModalBody').innerHTML = data;
+                    document.getElementById('actionModalLabel').innerText = `${action} Formation`;
+                    $('#actionModal').modal('show');
+
+                    const form = document.querySelector('form');
+                    if (form) {
+                        form.onsubmit = async function (event) {
+                            event.preventDefault();
+                            const formData = new URLSearchParams(new FormData(form));
+
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                                    }
+                                });
+
+                                if (response.ok) {
+                                    $('#actionModal').modal('hide');
+                                    window.location.reload();
+                                } else {
+                                    const errorData = await response.text();
+                                    document.getElementById('actionModalBody').innerHTML = errorData;
+                                }
+                            } catch (error) {
+                                console.error('Error:', error);
+                            }
+                        };
+                    }
+                });
+        }
+         
+    
+    </script>
+}
