@@ -38,7 +38,7 @@ namespace Gestion_Formations.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            return PartialView("create");
         }
 
         // POST: Formation/Create
@@ -58,8 +58,8 @@ namespace Gestion_Formations.Controllers
 
         // GET: Formation/Edit/5
         [Authorize(Roles = "Admin")]
-        [HttpGet("Edit/{id}")]
-        public IActionResult Edit(int id)
+        [HttpGet("Modifier/{id}")]
+        public IActionResult Modifier(int id)
         {
             var formation = _context.Formations.FirstOrDefault(f => f.Id == id);
             if (formation == null)
@@ -125,7 +125,7 @@ namespace Gestion_Formations.Controllers
             return PartialView("_DetailsPartial", formation);
         }
 
-        [HttpGet("delete/{id}")]
+        [HttpGet("Supprimer/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var formation = await _context.Formations.FindAsync(id);

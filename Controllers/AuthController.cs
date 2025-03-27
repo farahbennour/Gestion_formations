@@ -43,6 +43,10 @@
             if (model == null)
                 return BadRequest("Les informations de l'utilisateur sont manquantes.");
 
+            // Ajouter la validation du rôle
+            if (string.IsNullOrEmpty(model.Role))
+                return BadRequest("Le rôle est obligatoire.");
+
             if (string.IsNullOrEmpty(model.Username) ||
                 string.IsNullOrEmpty(model.Email) ||
                 string.IsNullOrEmpty(model.PasswordHash))
@@ -54,16 +58,20 @@
             var user = new User
             {
                 Username = model.Username,
-                Role = model.Role?.Trim('\r', '\n', ' '), // Nettoyage ici aussi
+                Role = model.Role.Trim(), // Maintenant garanti de ne pas être null
                 Email = model.Email,
                 Telephone = model.Telephone ?? "",
                 Adresse = model.Adresse ?? "",
                 DateNaissance = model.DateNaissance,
-                DateInscription = model.DateInscription,
-                DateEmbauche = model.DateEmbauche,
+                DateInscription = DateOnly.FromDateTime(DateTime.Today), // Date actuelle
+                DateEmbauche = model.Role == "Formateur"
+        ? model.DateEmbauche
+        : null,
                 Specialite = model.Specialite ?? "",
                 Experience = model.Experience ?? 0,
-                Status = model.Status ?? "Active"
+                Status = model.Role == "Formateur"
+        ? (model.Status ?? "En Cours de Traitement")
+        : ""
             };
 
             if (!_authService.RegisterUser(user, model.PasswordHash))
@@ -137,6 +145,63 @@
                        @"^[^@\s]+@[^@\s]+\.[^@\s]+$"
                    );
         }
+        // Dans AuthController.cs
+        [Authorize(Roles = "Admin")]
+        [HttpGet("users")]
+        public IActionResult ListUsers()
+        {
+            var allUsers = _userRepository.GetAll().ToList();
+
+            var viewModel = new UsersListViewModel
+            {
+                Formateurs = allUsers.Where(u => u.Role == "Formateur").ToList(),
+                Apprenants = allUsers.Where(u => u.Role == "Apprenant").ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("update-status")]
+        public IActionResult UpdateStatus(int userId, string newStatus)
+        {
+            var user = _userRepository.GetById(userId);
+
+            if (user == null || user.Role != "Formateur")
+            {
+                return NotFound();
+            }
+
+            // Mise à jour du statut et de la date d'embauche
+            user.Status = newStatus;
+            user.DateEmbauche = DateOnly.FromDateTime(DateTime.Today); // Date actuelle
+
+            _userRepository.Update(user);
+
+            return RedirectToAction("ListUsers");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("delete-user")]
+        public IActionResult DeleteUser(int userId)
+        {
+            var user = _userRepository.GetById(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _userRepository.Delete(user);
+
+            return RedirectToAction("ListUsers");
+        }
+        // Ajoutez cette classe dans le contrôleur ou dans un fichier séparé
+        public class UsersListViewModel
+        {
+            public List<User> Formateurs { get; set; }
+            public List<User> Apprenants { get; set; }
+        }
 
         public class LoginModel
         {
@@ -153,11 +218,11 @@
             public string Adresse { get; set; }
             public DateOnly DateNaissance { get; set; }
             public DateOnly DateInscription { get; set; }
-            public DateOnly DateEmbauche { get; set; }
+            public DateOnly? DateEmbauche { get; set; }
             public string Role { get; set; }
             public string Specialite { get; set; }
             public int? Experience { get; set; }
-            public string Status { get; set; } = "Active";
+            public string Status { get; set; } = "En Cours de Traitement";
         }
     }
 }

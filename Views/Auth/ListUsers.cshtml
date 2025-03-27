@@ -1,0 +1,170 @@
+﻿@model Gestion_Formations.Controllers.AuthController.UsersListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminNavbar.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4 fw-bold text-primary" style="text-align:center; padding-top: 10px; padding-bottom: 20px;">Gestion des Utilisateurs</h2>
+
+    <div class="row g-4">
+        <!-- Formateurs Section -->
+        <div class="col-xxl-7">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0"><i class="fas fa-chalkboard-teacher me-2"></i>Formateurs</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#ID</th>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Statut</th>
+                                    <th>Date Embauche</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var formateur in Model.Formateurs)
+                                {
+                                    <tr>
+                                        <td class="fw-semibold">@formateur.Id</td>
+                                        <td>@formateur.Username</td>
+                                        <td><a href="mailto:@formateur.Email" class="text-decoration-none">@formateur.Email</a></td>
+                                        <td>
+                                            <span class="badge @GetStatusBadge(formateur.Status)">
+                                                @formateur.Status
+                                            </span>
+                                        </td>
+                                        <td>@(formateur.DateEmbauche?.ToString("dd/MM/yyyy") ?? "N/A")</td>
+                                        <td>
+                                            <div class="d-flex gap-2 flex-wrap">
+                                                <form asp-action="UpdateStatus" method="post" class="d-inline-flex">
+                                                    <input type="hidden" name="userId" value="@formateur.Id" />
+                                                    <div class="input-group input-group-sm">
+                                                        <select name="newStatus" class="form-select form-select-sm">
+                                                            <option value="En Cours de Traitement">En Cours</option>
+                                                            <option value="Embauché">Embauché</option>
+                                                            <option value="Rejeté">Rejeté</option>
+                                                        </select>
+                                                        <button type="submit" class="btn btn-primary btn-sm"
+                                                                title="Mettre à jour le statut">
+                                                            <i class="fas fa-sync-alt"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
+
+                                                <form asp-action="DeleteUser" method="post" class="d-inline">
+                                                    <input type="hidden" name="userId" value="@formateur.Id" />
+                                                    <button type="submit"
+                                                            class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
+                                                            title="Supprimer">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apprenants Section -->
+        <div class="col-xxl-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0"><i class="fas fa-user-graduate me-2"></i>Apprenants</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#ID</th>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Adresse</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var apprenant in Model.Apprenants)
+                                {
+                                    <tr>
+                                        <td class="fw-semibold">@apprenant.Id</td>
+                                        <td>@apprenant.Username</td>
+                                        <td><a href="mailto:@apprenant.Email" class="text-decoration-none">@apprenant.Email</a></td>
+                                        <td>@apprenant.Adresse</td>
+                                        <td>
+                                            <form asp-action="DeleteUser" method="post" class="d-inline">
+                                                <input type="hidden" name="userId" value="@apprenant.Id" />
+                                                <button type="submit"
+                                                        class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
+                                                        title="Supprimer">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadge(string status)
+    {
+        return status switch
+        {
+            "Embauché" => "text-bg-success",
+            "Rejeté" => "text-bg-danger",
+            _ => "text-bg-warning"
+        };
+    }
+}
+
+<style>
+    .table {
+        font-size: 1.2rem; /* Augmenter la taille du texte */
+    }
+
+        .table th, .table td {
+            padding: 12px; /* Augmenter l'espacement */
+        }
+    .card {
+        border-radius: 0.75rem;
+        border: none;
+        margin-left: -10%;
+        padding: 12px;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+
+    .form-select-sm {
+        max-width: 140px;
+    }
+
+    .input-group-sm {
+        max-width: 240px;
+    }
+
+    .badge {
+        font-size: 0.85em;
+        padding: 0.4em 0.75em;
+    }
+</style>

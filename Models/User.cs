@@ -30,7 +30,7 @@ namespace Gestion_Formations.Models
         public DateOnly? DateEmbauche { get; set; }
 
         [Required]
-        public string Status { get; set; } = "Active";
+        public string? Status { get; set; } = "En Cours de Traitelment";
 
         [Required]
         public string Role { get; set; }
