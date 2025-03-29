@@ -39,9 +39,9 @@ namespace Gestion_Formations.Repertoires
             _context.Users.Update(user);
             _context.SaveChanges();
         }
-        public void Delete(User user)
+        public void Delete(User userId)
         {
-            _context.Users.Remove(user);
+            _context.Users.Remove(userId);
             _context.SaveChanges();
         }
     }

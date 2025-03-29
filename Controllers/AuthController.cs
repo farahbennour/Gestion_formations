@@ -8,17 +8,21 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     [Route("auth")]
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
         private readonly IUserRepository _userRepository;
+        private readonly ApplicationDbContext _context; 
 
-        public AuthController(IAuthService authService, IUserRepository userRepository)
+
+        public AuthController(IAuthService authService, IUserRepository userRepository, ApplicationDbContext context)
         {
             _authService = authService;
             _userRepository = userRepository;
+            _context = context;
         }
 
         [HttpGet("signup")]
@@ -27,14 +31,34 @@
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("Dashboard")]
-        public IActionResult Dashboard()
+        //[Authorize(Roles = "Admin")]
+        //[HttpGet("Dashboard")]
+        //public IActionResult Dashboard()
+        //{
+        //    var user = HttpContext.User;
+        //    var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
+        //    Console.WriteLine("Rôles de l'utilisateur : " + string.Join(", ", roles));
+        //    return View();
+        //}
+       [Authorize(Roles = "Admin")]
+[HttpGet("Dashboard")]
+public IActionResult Dashboard()
+{
+    var dashboardData = new DashboardViewModel
+    {
+        FormateursCount = _context.Users.Count(u => u.Role == "Formateur"),
+        ApprenantsCount = _context.Users.Count(u => u.Role == "Apprenant"),
+        FormationsCount = _context.Formations.Count()
+    };
+
+    return View(dashboardData);
+}
+
+        public class DashboardViewModel
         {
-            var user = HttpContext.User;
-            var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
-            Console.WriteLine("Rôles de l'utilisateur : " + string.Join(", ", roles));
-            return View();
+            public int FormateursCount { get; set; }
+            public int ApprenantsCount { get; set; }
+            public int FormationsCount { get; set; }
         }
 
         [HttpPost("signup")]
@@ -145,20 +169,64 @@
                        @"^[^@\s]+@[^@\s]+\.[^@\s]+$"
                    );
         }
-        // Dans AuthController.cs
+        //// Dans AuthController.cs
+        //[Authorize(Roles = "Admin")]
+        //[HttpGet("users")]
+        //public IActionResult ListUsers()
+        //{
+        //    var allUsers = _userRepository.GetAll().ToList();
+
+        //    var viewModel = new UsersListViewModel
+        //    {
+        //        Formateurs = allUsers.Where(u => u.Role == "Formateur").ToList(),
+        //        Apprenants = allUsers.Where(u => u.Role == "Apprenant").ToList()
+        //    };
+
+        //    return View(viewModel);
+        //}
+
+
+
         [Authorize(Roles = "Admin")]
         [HttpGet("users")]
         public IActionResult ListUsers()
         {
-            var allUsers = _userRepository.GetAll().ToList();
-
             var viewModel = new UsersListViewModel
             {
-                Formateurs = allUsers.Where(u => u.Role == "Formateur").ToList(),
-                Apprenants = allUsers.Where(u => u.Role == "Apprenant").ToList()
+                Formateurs = _context.Users
+                                  .Include(u => u.Formations) // Charge les relations
+                                  .Where(u => u.Role == "Formateur")
+                                  .ToList(),
+                Apprenants = _context.Users
+                                  .Where(u => u.Role == "Apprenant")
+                                  .ToList(),
+                Formations = _context.Formations.ToList()
             };
 
             return View(viewModel);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("assign-formations")]
+        public IActionResult AssignFormations(int userId, List<int> formationIds)
+        {
+            var user = _context.Users
+                .Include(u => u.Formations)
+                .FirstOrDefault(u => u.Id == userId);
+
+            if (user == null || user.Role != "Formateur")
+            {
+                return NotFound();
+            }
+
+            // Synchronisation des formations
+            user.Formations = _context.Formations
+                .Where(f => formationIds.Contains(f.Id))
+                .ToList();
+
+            _context.SaveChanges();
+            return RedirectToAction("ListUsers");
         }
 
         [Authorize(Roles = "Admin")]
@@ -172,35 +240,63 @@
                 return NotFound();
             }
 
-            // Mise à jour du statut et de la date d'embauche
-            user.Status = newStatus;
-            user.DateEmbauche = DateOnly.FromDateTime(DateTime.Today); // Date actuelle
+            if (newStatus == "Rejeté")
+            {
+                // Suppression du formateur
+                _userRepository.Delete(user);
+            }
+            else
+            {
+                // Mise à jour normale
+                user.Status = newStatus;
 
-            _userRepository.Update(user);
+                // On ne met à jour la date d'embauche que pour le statut "Embauché"
+                if (newStatus == "Embauché")
+                {
+                    user.DateEmbauche = DateOnly.FromDateTime(DateTime.Today);
+                }
+
+                _userRepository.Update(user);
+            }
 
             return RedirectToAction("ListUsers");
         }
-
         [Authorize(Roles = "Admin")]
-        [HttpPost("delete-user")]
-        public IActionResult DeleteUser(int userId)
+        [HttpGet("Supprimer/{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var user = _userRepository.GetById(userId);
-
+            var formation = await _context.Users.FindAsync(id);
+            if (formation == null)
+            {
+                return NotFound();
+            }
+            return PartialView("_DeleteUserPartial", formation);
+        }
+        [HttpPost("delete-user")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _userRepository.Delete(user);
+           
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return Ok();
+            
+           
 
-            return RedirectToAction("ListUsers");
         }
-        // Ajoutez cette classe dans le contrôleur ou dans un fichier séparé
+      
         public class UsersListViewModel
         {
             public List<User> Formateurs { get; set; }
             public List<User> Apprenants { get; set; }
+            public List<Formation> Formations { get; set; } // Nouvelle propriété
+
         }
 
         public class LoginModel
@@ -224,5 +320,6 @@
             public int? Experience { get; set; }
             public string Status { get; set; } = "En Cours de Traitement";
         }
+       
     }
 }

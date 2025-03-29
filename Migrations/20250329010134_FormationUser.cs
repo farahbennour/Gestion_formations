@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Gestion_Formations.Migrations
 {
     /// <inheritdoc />
-    public partial class updatedatabase : Migration
+    public partial class FormationUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

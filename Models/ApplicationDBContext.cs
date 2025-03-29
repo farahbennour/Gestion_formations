@@ -15,8 +15,10 @@ namespace Gestion_Formations.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-         
+            modelBuilder.Entity<Formation>()
+                .HasMany(f => f.Users)
+                .WithMany(u => u.Formations)
+                .UsingEntity(j => j.ToTable("FormationUser"));
         }
     }
 }

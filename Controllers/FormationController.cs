@@ -56,56 +56,109 @@ namespace Gestion_Formations.Controllers
             return View();
         }
 
-        // GET: Formation/Edit/5
-        [Authorize(Roles = "Admin")]
+        //// GET: Formation/Edit/5
+        //[Authorize(Roles = "Admin")]
+        //[HttpGet("Modifier/{id}")]
+        //public IActionResult Modifier(int id)
+        //{
+        //    var formation = _context.Formations.FirstOrDefault(f => f.Id == id);
+        //    if (formation == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return PartialView("_EditForm", formation);  // Retourne une vue partielle
+        //}
+
+
+        ////// POST: Formation/Edit/5
+
+        //[HttpPost("Edit/{id}")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Nom,Description,Date_Heure")] Formation formation)
+        //{
+        //    Console.WriteLine($"ID reçu : {id}");
+
+        //    if (id != formation.Id)
+        //    {
+        //        Console.WriteLine("ID dans l'URL ne correspond pas à l'ID du formulaire.");
+        //        return BadRequest("ID mismatch");
+        //    }
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        Console.WriteLine("ModelState invalide : " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)));
+        //        return BadRequest("Validation error");
+        //    }
+
+        //    var existingFormation = await _context.Formations.FindAsync(id);
+        //    if (existingFormation == null)
+        //    {
+        //        Console.WriteLine("Formation non trouvée.");
+        //        return NotFound();
+        //    }
+
+        //    existingFormation.Nom = formation.Nom;
+        //    existingFormation.Description = formation.Description;
+        //    existingFormation.Date_Heure = formation.Date_Heure;
+
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction("List");
+        //}
+
+
         [HttpGet("Modifier/{id}")]
         public IActionResult Modifier(int id)
         {
-            var formation = _context.Formations.FirstOrDefault(f => f.Id == id);
-            if (formation == null)
-            {
-                return NotFound();
-            }
+            var formation = _context.Formations
+                .Include(f => f.Users)
+                .FirstOrDefault(f => f.Id == id);
 
-            return PartialView("_EditForm", formation);  // Retourne une vue partielle
+            if (formation == null) return NotFound();
+
+            ViewBag.Formateurs = _context.Users
+                .Where(u => u.Role == "Formateur")
+                .ToList();
+
+            return PartialView("_EditForm", formation);
         }
 
-
-        //// POST: Formation/Edit/5
-
-        [HttpPost("Edit/{id}")]
+        [HttpPost("Modifier/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nom,Description,Date_Heure")] Formation formation)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("Id,Nom,Description,Date_Heure")] Formation formation,
+            List<int> selectedFormateurs)
         {
-            Console.WriteLine($"ID reçu : {id}");
+            var existingFormation = await _context.Formations
+                .Include(f => f.Users)
+                .FirstOrDefaultAsync(f => f.Id == id);
 
-            if (id != formation.Id)
-            {
-                Console.WriteLine("ID dans l'URL ne correspond pas à l'ID du formulaire.");
-                return BadRequest("ID mismatch");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                Console.WriteLine("ModelState invalide : " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)));
-                return BadRequest("Validation error");
-            }
-
-            var existingFormation = await _context.Formations.FindAsync(id);
-            if (existingFormation == null)
-            {
-                Console.WriteLine("Formation non trouvée.");
-                return NotFound();
-            }
-
+            // Mise à jour des propriétés de base
             existingFormation.Nom = formation.Nom;
             existingFormation.Description = formation.Description;
             existingFormation.Date_Heure = formation.Date_Heure;
 
+            // Gestion des formateurs
+            var selectedIds = selectedFormateurs ?? new List<int>();
+            var currentIds = existingFormation.Users.Select(u => u.Id).ToList();
+
+            // Supprimer les formateurs désélectionnés
+            foreach (var user in existingFormation.Users.Where(u => !selectedIds.Contains(u.Id)).ToList())
+            {
+                existingFormation.Users.Remove(user);
+            }
+
+            // Ajouter les nouveaux formateurs
+            foreach (var userId in selectedIds.Where(id => !currentIds.Contains(id)))
+            {
+                var user = await _context.Users.FindAsync(userId);
+                if (user != null) existingFormation.Users.Add(user);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction("List");
         }
-
 
 
 
@@ -137,7 +190,8 @@ namespace Gestion_Formations.Controllers
         }
 
         [HttpPost("delete/{id}")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmDelete(int id)
         {
             var formation = await _context.Formations.FindAsync(id);
             if (formation == null)
@@ -145,9 +199,16 @@ namespace Gestion_Formations.Controllers
                 return NotFound();
             }
 
-            _context.Formations.Remove(formation);
-            await _context.SaveChangesAsync();
-            return Ok();
+            try
+            {
+                _context.Formations.Remove(formation);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur lors de la suppression : {ex.Message}");
+            }
         }
 
         //[HttpGet("delete")]

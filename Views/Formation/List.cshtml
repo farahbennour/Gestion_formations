@@ -4,131 +4,106 @@
     ViewData["Title"] = "List";
 }
 
+<body>
+    <h1 class="mb-4 fw-bold text-primary" style="text-align:center; padding-top: 10px; padding-bottom: 20px;">Liste des formations</h1>
 
-<h1 class="mb-4 fw-bold text-primary" style="text-align:center; padding-top: 10px; padding-bottom: 20px;">Liste des formations</h1>
+    <p>
+        <button class="btn btn-primary" onclick="showCreateModal()" style="font-size: 1.5rem; ">Créer</button>
+    </p>
 
-<p>
-    <button class="btn btn-primary" onclick="showCreateModal()" style="font-size: 1.5rem;">Créer</button>
-</p>
-
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl custom-modal" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Créer une Formation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-            </div>
-            <div class="modal-body" id="createModalBody">
-               
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl custom-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Créer une Formation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body" id="createModalBody">
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
-<div class="col-xxl-12">
-    <div class="card shadow-sm">
-        <div class="card-header bg-success text-white">
-            <h3 class="card-title mb-0"><i class="fas fa-book-open me-2"></i>Formations</h3>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                @if (Model != null && Model.Any())
-                {
-                    <table class="table table-hover align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>@Html.DisplayNameFor(model => model.First().Id)</th>
-                                <th>@Html.DisplayNameFor(model => model.First().Nom)</th>
-                                <th>@Html.DisplayNameFor(model => model.First().Description)</th>
-                                <th>@Html.DisplayNameFor(model => model.First().Date_Heure)</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
+    <div class="col-xxl-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-book-open me-2"></i>Formations</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    @if (Model != null && Model.Any())
+                    {
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
                                 <tr>
-                                    <td class="fw-semibold">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Nom)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Date_Heure)</td>
-                                    <td>
-                                        <button class="btn btn-warning btn-sm btn-action" data-action="Details" data-id="@item.Id" data-toggle="modal" data-target="#actionModal" style="font-size: 1.2rem;">
-                                            Détails
-                                        </button>
-                                        <button class="btn btn-info btn-sm btn-action" data-action="Modifier" data-id="@item.Id" data-toggle="modal" data-target="#actionModal" style="font-size: 1.2rem;">
-                                            Modifier
-                                        </button>
-                                        @* <form action="/formations/Delete" method="post" style="display:inline;"> *@
-                                        @*     <input type="hidden" name="userId" value="@item.Id" /> *@
-                                        @*     <button type="submit" class="btn btn-danger btn-sm" style="font-size: 1.2rem;"> *@
-                                        @*         <i class="fas fa-trash-alt"></i> Supprimer *@
-                                        @*     </button> *@
-                                        @* </form> *@
-                                        <button class="btn btn-danger btn-sm btn-action" data-action="Supprimer" data-id="@item.Id"
-                                                style="font-size: 1.2rem;">
-                                            <i class="fas fa-trash-alt" style="margin: 2px"></i>Supprimer
-                                        </button>
-
-                                    </td>
+                                    <th>@Html.DisplayNameFor(model => model.First().Id)</th>
+                                    <th>@Html.DisplayNameFor(model => model.First().Nom)</th>
+                                    <th>@Html.DisplayNameFor(model => model.First().Description)</th>
+                                    <th>@Html.DisplayNameFor(model => model.First().Date_Heure)</th>
+                                    <th>Actions</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <p class="text-muted">Aucun utilisateur disponible</p>
-                }
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="fw-semibold">@Html.DisplayFor(modelItem => item.Id)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Date_Heure)</td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm btn-action" data-action="Details" data-id="@item.Id" data-toggle="modal" data-target="#actionModal" style="font-size: 1.2rem;">
+                                                Détails
+                                            </button>
+                                            <button class="btn btn-info btn-sm btn-action" data-action="Modifier" data-id="@item.Id" data-toggle="modal" data-target="#actionModal" style="font-size: 1.2rem;">
+                                                Modifier
+                                            </button>
+                                            @* <form action="/formations/Delete" method="post" style="display:inline;"> *@
+                                            @*     <input type="hidden" name="userId" value="@item.Id" /> *@
+                                            @*     <button type="submit" class="btn btn-danger btn-sm" style="font-size: 1.2rem;"> *@
+                                            @*         <i class="fas fa-trash-alt"></i> Supprimer *@
+                                            @*     </button> *@
+                                            @* </form> *@
+                                            <button class="btn btn-danger btn-sm btn-action" data-action="Supprimer" data-id="@item.Id"
+                                                    style="font-size: 1.2rem;">
+                                                <i class="fas fa-trash-alt" style="margin: 2px"></i>Supprimer
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Aucun utilisateur disponible</p>
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xxl custom-modal" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="actionModalLabel"></h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Fermer" onclick="close()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="actionModalBody">
-                <!-- Modal content will be dynamically loaded here -->
+    <!-- Modal -->
+    <div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xxl custom-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="actionModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body" id="actionModalBody">
+                    <!-- Modal content will be dynamically loaded here -->
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</body>
 @section Scripts {
     <script>
-                       document.addEventListener("DOMContentLoaded", function () {
-            // Sélectionner tous les boutons de suppression
-            document.querySelectorAll('.btn-action').forEach(button => {
-                button.addEventListener('click', function () {
-                    const userId = this.dataset.id;  // Récupère l'ID de l'utilisateur à supprimer
-                    const form = this.closest('form'); // Récupère le formulaire associé au bouton
-
-                    // Ouvre le modal
-                    $('#deleteModal').modal('show');
-
-                    // Lorsque l'utilisateur confirme la suppression
-                    document.getElementById('confirmDelete').addEventListener('click', function () {
-                        // Remplir l'input du formulaire avec l'ID de l'utilisateur
-                        form.querySelector('input[name="userId"]').value = userId;
-
-                        // Soumettre le formulaire
-                        form.submit();
-                    });
-                });
-            });
-        });
-
-        function showModal(action, id) {
+          function showModal(action, id) {
             const url = `/formations/${action}/${id}`;
 
             fetch(url)
@@ -136,8 +111,11 @@
                 .then(data => {
                     document.getElementById('actionModalBody').innerHTML = data;
                     document.getElementById('actionModalLabel').innerText = `${action} Formation`;
-                    $('#actionModal').modal('show');
-                    
+
+                    // Nouvelle méthode Bootstrap 5 pour afficher le modal
+                    const modal = new bootstrap.Modal(document.getElementById('actionModal'));
+                    modal.show();
+
                     const form = document.querySelector('#actionModal form');
                     if (form) {
                         form.onsubmit = async function (event) {
@@ -155,7 +133,7 @@
                                 });
 
                                 if (response.ok) {
-                                    $('#actionModal').modal('hide');
+                                    modal.hide();
                                     window.location.reload();
                                 } else {
                                     const errorData = await response.text();
@@ -170,7 +148,8 @@
                 .catch(error => console.error('Erreur lors du chargement du modal:', error));
         }
 
-        $(document).ready(function () {
+        // Initialisation des boutons
+        document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll('.btn-action').forEach(button => {
                 button.addEventListener('click', function() {
                     const action = this.dataset.action;
@@ -178,49 +157,43 @@
                     showModal(action, id);
                 });
             });
-        });
-            
-        function closeModal() {
-            var modal = document.getElementById('actionModal');
-            var modalInstance = bootstrap.Modal.getInstance(modal);
-            if (modalInstance) {
-                modalInstance.hide();
-            }
-        }
 
-       
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll("[data-dismiss='modal']").forEach(button => {
-                button.addEventListener("click", closeModal);
+            // Fermeture modale
+            document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(button => {
+                button.addEventListener("click", function() {
+                    const modal = bootstrap.Modal.getInstance(button.closest('.modal'));
+                    modal.hide();
+                });
             });
         });
-            function showCreateModal() {
+
+        // Fonction de création modale modifiée
+        function showCreateModal() {
             const url = `/formations/create`;
 
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
-                    console.log("Chargement du modal...");
-
-                    let modalBody = document.getElementById('createModalBody');
-
+                    const modalBody = document.getElementById('createModalBody');
                     if (!modalBody) {
-                        console.error("❌ Erreur: L'élément 'createModalBody' est introuvable !");
+                        console.error("Element 'createModalBody' introuvable !");
                         return;
                     }
 
                     modalBody.innerHTML = data;
-                    $('#createModal').modal('show');
+                    const modal = new bootstrap.Modal(document.getElementById('createModal'));
+                    modal.show();
                 })
-                .catch(error => console.error('Erreur lors du chargement du modal:', error));
+                .catch(error => console.error('Erreur:', error));
         }
-
-
     </script>
+
+
+      
 }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
     .table {
         font-size: 1.2rem; /* Augmenter la taille du texte */
     }
@@ -229,40 +202,55 @@
             padding: 12px; /* Augmenter l'espacement */
         }
 
-        .table thead th {
-            border-bottom: 2px solid #4e73df;
-        }
+    .card {
+        border-radius: 0.75rem;
+        border: none;
+        margin-left: 1%;
+        padding: 12px;
+    }
 
-        .btn-group {
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
 
-        .btn-outline-info {
-            color: #36b9cc;
-            border-color: #36b9cc;
-        }
+    .table th, .table td {
+        padding: 12px; /* Augmenter l'espacement */
+    }
 
-        .btn-outline-warning {
-            color: #f6c23e;
-            border-color: #f6c23e;
-        }
+    .table thead th {
+        border-bottom: 2px solid #4e73df;
+    }
 
-        .btn-outline-danger {
-            color: #e74a3b;
-            border-color: #e74a3b;
-        }
+    .btn-group {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
-        .card-header {
-            border-bottom: 2px solid #4e73df;
-        }
+    .btn-outline-info {
+        color: #36b9cc;
+        border-color: #36b9cc;
+    }
+
+    .btn-outline-warning {
+        color: #f6c23e;
+        border-color: #f6c23e;
+    }
+
+    .btn-outline-danger {
+        color: #e74a3b;
+        border-color: #e74a3b;
+    }
+
+    .card-header {
+        border-bottom: 2px solid #4e73df;
+    }
 
     .custom-modal {
-        max-width: 50% !important; 
+        max-width: 50% !important;
         width: 50%;
     }
 
         .custom-modal .modal-content {
-            padding: 20px; 
+            padding: 20px;
             font-size: 1.2rem;
         }
 
@@ -276,9 +264,25 @@
         }
 
         .custom-modal .btn {
-            font-size: 1.1rem; 
+            font-size: 1.1rem;
             padding: 10px 20px;
         }
 
-    </style>
+    body {
+        background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
+    }
+
+    @@media (max-width: 488px) {
+        .btn-action {
+            font-size: 1rem;
+            min-width: auto;
+            padding: 5px 10px;
+        }
+
+            .btn-action i {
+                margin-right: 3px !important;
+            }
+    }
+
+</style>
 

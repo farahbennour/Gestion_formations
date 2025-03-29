@@ -31,7 +31,7 @@ namespace Gestion_Formations.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("FormationUser");
+                    b.ToTable("FormationUser", (string)null);
                 });
 
             modelBuilder.Entity("Gestion_Formations.Models.Formation", b =>

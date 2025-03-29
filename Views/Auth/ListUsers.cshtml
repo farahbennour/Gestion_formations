@@ -3,18 +3,22 @@
     Layout = "~/Views/Shared/_AdminNavbar.cshtml";
 }
 
+
+<body>
+
 <div class="container-fluid">
     <h2 class="mb-4 fw-bold text-primary" style="text-align:center; padding-top: 10px; padding-bottom: 20px;">Gestion des Utilisateurs</h2>
 
     <div class="row g-4">
         <!-- Formateurs Section -->
-        <div class="col-xxl-7">
-            <div class="card shadow-sm">
+            <div class="col-12">
+                <!-- Remplacer col-xxl-12 par col-12 -->
+                <div class="card shadow-sm overflow-visible">
                 <div class="card-header bg-primary text-white">
                     <h3 class="card-title mb-0"><i class="fas fa-chalkboard-teacher me-2"></i>Formateurs</h3>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive-lg">
                         <table class="table table-hover align-middle">
                             <thead class="table-light">
                                 <tr>
@@ -24,6 +28,7 @@
                                     <th>Statut</th>
                                     <th>Date Embauche</th>
                                     <th>Actions</th>
+                                    <th>Formations</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,16 +61,31 @@
                                                     </div>
                                                 </form>
 
-                                                <form asp-action="DeleteUser" method="post" class="d-inline">
-                                                    <input type="hidden" name="userId" value="@formateur.Id" />
-                                                    <button type="submit"
-                                                            class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
-                                                            title="Supprimer">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
+                                                <button class="btn btn-danger btn-sm btn-action" data-action="Supprimer" data-id="@formateur.Id"
+                                                        style="font-size: 1.2rem;">
+                                                    <i class="fas fa-trash-alt" style="margin: 2px"></i>
+                                                </button>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <form asp-action="AssignFormations" method="post" class="d-inline-flex">
+                                                <input type="hidden" name="userId" value="@formateur.Id" />
+                                                <div class="input-group input-group-">
+                                                    <select name="formationIds"
+                                                            class="form-select form-select-sm">
+                                                        @foreach (var formation in Model.Formations)
+                                                        {
+                                                            <option value="@formation.Id"
+                                                                    selected="@formateur.Formations.Any(f => f.Id == formation.Id)">
+                                                                @formation.Nom
+                                                            </option>
+                                                        }
+                                                    </select>
+                                                    <button type="submit" class="btn btn-success btn-sm">
+                                                        <i class="fas fa-save"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </td>
                                     </tr>
                                 }
@@ -77,13 +97,13 @@
         </div>
 
         <!-- Apprenants Section -->
-        <div class="col-xxl-5">
+        <div class="col-xxl-12">
             <div class="card shadow-sm">
                 <div class="card-header bg-success text-white">
                     <h3 class="card-title mb-0"><i class="fas fa-user-graduate me-2"></i>Apprenants</h3>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive-lg">
                         <table class="table table-hover align-middle">
                             <thead class="table-light">
                                 <tr>
@@ -103,15 +123,10 @@
                                         <td><a href="mailto:@apprenant.Email" class="text-decoration-none">@apprenant.Email</a></td>
                                         <td>@apprenant.Adresse</td>
                                         <td>
-                                            <form asp-action="DeleteUser" method="post" class="d-inline">
-                                                <input type="hidden" name="userId" value="@apprenant.Id" />
-                                                <button type="submit"
-                                                        class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
-                                                        title="Supprimer">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
+                                            <button class="btn btn-danger btn-sm btn-action" data-action="Supprimer" data-id="@apprenant.Id"
+                                                    style="font-size: 1.2rem;">
+                                                <i class="fas fa-trash-alt" style="margin: 2px"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 }
@@ -122,7 +137,26 @@
             </div>
         </div>
     </div>
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+</body>
 
 @functions {
     string GetStatusBadge(string status)
@@ -135,20 +169,110 @@
         };
     }
 }
+@section Scripts {
+    <!-- Ajouter jQuery en premier -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+             // Remplacer tout le code existant dans la section Scripts par :
+        document.addEventListener("DOMContentLoaded", function () {
+            // Gestion de la suppression
+            document.querySelectorAll('[data-action="Supprimer"]').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const userId = this.dataset.id;
+                    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+                    // Stocker l'ID dans le modal
+                    document.getElementById('confirmDelete').dataset.userId = userId;
+                    deleteModal.show();
+                });
+            });
+
+            // Confirmation de suppression
+            document.getElementById('confirmDelete').addEventListener('click', function() {
+                const userId = this.dataset.userId;
+                const form = new FormData();
+                const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+                form.append('userId', userId);
+                form.append('__RequestVerificationToken', csrfToken);
+
+                fetch('/auth/delete-user', {
+                    method: 'POST',
+                    body: form
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        alert('Erreur lors de la suppression');
+                    }
+                });
+            });
+        });
+    </script>
+}
 
 <style>
-    .table {
-        font-size: 1.2rem; /* Augmenter la taille du texte */
-    }
+   
 
         .table th, .table td {
             padding: 12px; /* Augmenter l'espacement */
         }
+
     .card {
         border-radius: 0.75rem;
         border: none;
-        margin-left: -10%;
-        padding: 12px;
+        width: 100%; /* Ajouter */
+        max-width: 100%; /* Ajouter */
+        margin: 0 0 1.5rem 0; /* Modifier */
+        padding: 1rem;
+        overflow: hidden; /* Ajouter */
+    }
+
+    .table-responsive-lg {
+        min-width: 100%; /* Modifier */
+        overflow-x: auto;
+        margin: -1rem; /* Compenser le padding de la carte */
+    }
+
+    @@media (max-width: 992px) {
+        .card {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        .table-responsive-lg {
+            margin: -0.5rem;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .card-header h3 {
+            font-size: 1.1rem !important;
+        }
+
+        .card {
+            margin-left: 0;
+            border-radius: 0;
+        }
+    }
+
+    /* Supprimer l'ancienne media query à 488px */
+    @@media (max-width: 576px) {
+        .table-responsive-lg {
+            min-width: calc(100vw - 2rem);
+            margin-left: -1rem;
+            margin-right: -1rem;
+        }
+
+        .card {
+            border-radius: 0;
+            padding: 0;
+        }
     }
 
     .table-hover tbody tr:hover {
@@ -167,4 +291,27 @@
         font-size: 0.85em;
         padding: 0.4em 0.75em;
     }
+
+    #deleteModal .modal-dialog {
+        max-width: 400px;
+    }
+
+    #deleteModal .modal-header {
+        padding: 1rem;
+    }
+
+    #deleteModal .modal-title {
+        font-size: 1.25rem;
+    }
+
+    #deleteModal .modal-body {
+        font-size: 1.1rem;
+        padding: 1.5rem;
+    }
+
+    body {
+        background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
+    }
+
+   
 </style>

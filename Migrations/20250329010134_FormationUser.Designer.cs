@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gestion_Formations.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250326042901_updatedatabase")]
-    partial class updatedatabase
+    [Migration("20250329010134_FormationUser")]
+    partial class FormationUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace Gestion_Formations.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("FormationUser");
+                    b.ToTable("FormationUser", (string)null);
                 });
 
             modelBuilder.Entity("Gestion_Formations.Models.Formation", b =>

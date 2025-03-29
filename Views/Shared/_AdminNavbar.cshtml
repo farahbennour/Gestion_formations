@@ -1,4 +1,263 @@
-﻿ @inject IHttpContextAccessor HttpContextAccessor
+﻿@*  @inject IHttpContextAccessor HttpContextAccessor *@
+@* @{ *@
+@*     var token = HttpContextAccessor.HttpContext?.Session.GetString("Token"); *@
+@*     var username = HttpContextAccessor.HttpContext?.Session.GetString("Username"); *@
+@* } *@
+
+@* <!DOCTYPE html> *@
+@* <html lang="fr"> *@
+@* <head> *@
+@*     <meta charset="utf-8" /> *@
+@*     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> *@
+@*     <title>Gestion Formations</title> *@
+@*     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> *@
+@*     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> *@
+@*     <style> *@
+@*         .custom-sidebar { *@
+@*             width: 300px !important; *@
+@*             height: 100vh; *@
+@*             background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%); *@
+@*             box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05); *@
+@*             position: fixed; *@
+@*             left: 0; *@
+@*             top: 0; *@
+@*             z-index: 1000; *@
+@*             padding-top: 0.5rem; *@
+@*         } *@
+
+@*         .navbar-brand { *@
+@*             font-weight: 700; *@
+@*             letter-spacing: 1px; *@
+@*             color: #007bff !important; *@
+@*             padding: 2rem 1.5rem; /* Augmentation du padding vertical */ *@
+@*             border-bottom: 2px solid #dee2e6; *@
+@*             width: 100%; *@
+@*             margin: 0; /* Suppression des marges */ *@
+@*             display: flex; *@
+@*             align-items: center; *@
+@*             justify-content: center; *@
+@*         } *@
+
+@*         .nav-link { *@
+@*             transition: 0.2s all cubic-bezier(0.4, 0, 0.2, 1); *@
+@*             position: relative; *@
+@*             border-radius: 8px; *@
+@*             margin: 4px 0; *@
+@*             /* Ajouter pour garantir l'espace nécessaire */ *@
+@*             margin-left: 8px; *@
+@*             left: -30px; *@
+@*         } *@
+
+@*             .nav-link:hover { *@
+@*                 background: #007bff; *@
+@*                 color: white !important; *@
+@*                 transform: translateX(-15px); /* Décalage vers la gauche */ *@
+@*                 /* Solution alternative si translateX ne fonctionne pas : */ *@
+@*                 /* position: relative; *@
+@*             left: -8px; */ *@
+@*             } *@
+
+@*                 .nav-link:hover::before { *@
+@*                     content: ''; *@
+@*                     position: absolute; *@
+@*                     /* Placer la barre à droite après le décalage */ *@
+@*                     left: -15px; *@
+@*                     top: 0; *@
+@*                     height: 100%; *@
+@*                     width: 4px; *@
+@*                     background: #007bff; *@
+@*                     border-radius: 4px; *@
+@*                 } *@
+
+@*         /* Garantir que le parent permet le débordement */ *@
+@*         .nav-items-container { *@
+@*             overflow: visible !important; *@
+@*             padding-left: 8px; /* Créer de l'espace à gauche */ *@
+@*         } *@
+
+@*         .profile-section { *@
+@*             padding: 1rem 1.5rem; *@
+@*             text-align: center; *@
+@*             border-bottom: 1px solid #dee2e6; *@
+@*         } *@
+
+@*         .profile-icon { *@
+@*             width: 60px; *@
+@*             height: 60px; *@
+@*             border-radius: 50%; *@
+@*             background: #007bff; *@
+@*             margin: 0 auto 1rem; *@
+@*             display: flex; *@
+@*             align-items: center; *@
+@*             justify-content: center; *@
+@*             color: white; *@
+@*             font-size: 1.5rem; *@
+@*             margin-top: 10px; *@
+@*         } *@
+
+
+@*         .user-info { *@
+@*             margin-top: -0.5rem; *@
+@*         } *@
+
+@*         .username { *@
+@*             font-size: 1.1rem; *@
+@*             font-weight: 500; *@
+@*             color: #007bff !important; *@
+@*         } *@
+
+@*         .nav-items-container { *@
+@*             flex: 1; *@
+@*             overflow-y: auto; *@
+            
+@*             padding: 1rem 0.25rem; *@
+@*         } *@
+
+@*         @@media (max-width: 992px) { *@
+@*             .custom-sidebar { *@
+@*                 left: -300px; *@
+@*                 transition: 0.3s all; *@
+@*             } *@
+
+@*                 .custom-sidebar.active { *@
+@*                     left: 0; *@
+@*                 } *@
+
+@*             body { *@
+@*                 margin-left: 0 !important; *@
+@*             } *@
+@*         } *@
+@*         @@media (max-width: 480px){ *@
+@*             .custom-sidebar { *@
+@*                 left: -300px; *@
+@*                 transition: 0.3s all; *@
+@*             } *@
+
+@*                 .custom-sidebar.active { *@
+@*                     left: 0; *@
+@*                 } *@
+
+@*             body { *@
+@*                 margin-left: 0 !important; *@
+@*             } *@
+@*         } *@
+@*     </style> *@
+@* </head> *@
+@* <body style="margin-left: 300px;"> *@
+@*     <nav class="navbar navbar-expand-lg navbar-light custom-sidebar"> *@
+@*         <div class="container-fluid d-flex flex-column h-100"> *@
+@*             <!-- En-tête --> *@
+@*             <div> *@
+               
+
+@*                 <div class="profile-section"> *@
+@*                     <div class="profile-icon"> *@
+@*                         <i class="fas fa-user"></i> *@
+@*                     </div> *@
+@*                     @if (!string.IsNullOrEmpty(username)) *@
+@*                     { *@
+@*                         <div class="user-info"> *@
+@*                             <span class="username">@username</span> *@
+                            
+@*                         </div> *@
+@*                         <div><small  style= "color: green">Connecté</small></div> *@
+@*                     } *@
+@*                 </div> *@
+@*                 <a class="navbar-brand" asp-controller="Auth" asp-action="Dashboard"> *@
+@*                     <i class="fas fa-graduation-cap me-2"></i>Gestion Formations *@
+@*                 </a> *@
+@*             </div> *@
+
+@*             <!-- Liens de navigation --> *@
+@*             <div class="nav-items-container"> *@
+@*                 <div class="collapse navbar-collapse" id="sidebarCollapse"> *@
+@*                     <ul class="navbar-nav flex-column w-100"> *@
+@*                         <li class="nav-item"> *@
+@*                             <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center" *@
+@*                                asp-controller="Auth" asp-action="Dashboard"> *@
+@*                                 <i class="fas fa-home me-3 fs-4"></i> *@
+@*                                 Accueil *@
+@*                             </a> *@
+@*                         </li> *@
+@*                         <li class="nav-item"> *@
+@*                             <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center" *@
+@*                                asp-controller="formations" asp-action="List"> *@
+@*                                 <i class="fas fa-book-open me-3 fs-4"></i> *@
+@*                                 Formations *@
+@*                             </a> *@
+@*                         </li> *@
+@*                         <li class="nav-item"> *@
+@*                             <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center" *@
+@*                                asp-controller="Auth" asp-action="ListUsers"> *@
+@*                                 <i class="fas fa-book-open me-3 fs-4"></i> *@
+@*                                 Utilisateurs *@
+@*                             </a> *@
+@*                         </li> *@
+@*                         <li class="nav-item mt-auto"> *@
+@*                             <a href="javascript:void(0);" *@
+@*                                class="nav-link text-danger fs-5 py-3 d-flex align-items-center" *@
+@*                                onclick="document.getElementById('logoutForm').submit();"> *@
+@*                                 <i class="fas fa-sign-out-alt me-3 fs-4"></i> *@
+@*                                 Déconnexion *@
+@*                             </a> *@
+@*                         </li> *@
+
+@*                         <form id="logoutForm" asp-controller="Auth" asp-action="Logout" method="post" style="display:none;"> *@
+@*                             @if (!string.IsNullOrEmpty(token)) *@
+@*                             { *@
+@*                                 <input type="hidden" name="Token" value="@token" /> *@
+@*                             } *@
+@*                         </form> *@
+
+@*                     </ul> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     </nav> *@
+
+@*     <!-- Contenu principal --> *@
+@*     <main class="container mt-3"> *@
+@*         @RenderBody() *@
+@*     </main> *@
+
+@*     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> *@
+@*     <script> *@
+@*         document.addEventListener('DOMContentLoaded', function () { *@
+@*             // Activation des liens *@
+@*             const currentPath = window.location.pathname; *@
+@*             document.querySelectorAll('.nav-link').forEach(link => { *@
+@*                 if (link.getAttribute('href') === currentPath) { *@
+@*                     link.classList.add('active'); *@
+@*                 } *@
+@*             }); *@
+
+@*             // Toggle sidebar mobile *@
+@*             document.querySelector('.navbar-toggler').addEventListener('click', function () { *@
+@*                 document.querySelector('.custom-sidebar').classList.toggle('active'); *@
+@*             }); *@
+
+@*             // Fermeture automatique en mobile *@
+@*             document.querySelectorAll('.nav-link').forEach(link => { *@
+@*                 link.addEventListener('click', () => { *@
+@*                     if (window.innerWidth < 992) { *@
+@*                         document.querySelector('.custom-sidebar').classList.remove('active'); *@
+@*                     } *@
+@*                 }); *@
+@*             }); *@
+@*         }); *@
+       
+
+@*     </script> *@
+@*     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+
+@*     @RenderSection("Scripts", required: false) *@
+@* </body> *@
+@* </html> *@
+
+
+
+
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     var token = HttpContextAccessor.HttpContext?.Session.GetString("Token");
     var username = HttpContextAccessor.HttpContext?.Session.GetString("Username");
@@ -14,7 +273,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .custom-sidebar {
-            width: 300px !important;
+            width: 300px;
             height: 100vh;
             background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
             box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
@@ -23,44 +282,40 @@
             top: 0;
             z-index: 1000;
             padding-top: 0.5rem;
+            transition: transform 0.3s ease-in-out;
+            overflow-y: auto;
         }
 
         .navbar-brand {
             font-weight: 700;
             letter-spacing: 1px;
             color: #007bff !important;
-            padding: 2rem 1.5rem; /* Augmentation du padding vertical */
+            padding: 2rem 1.5rem;
             border-bottom: 2px solid #dee2e6;
             width: 100%;
-            margin: 0; /* Suppression des marges */
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .nav-link {
-            transition: 0.2s all cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             position: relative;
             border-radius: 8px;
             margin: 4px 0;
-            /* Ajouter pour garantir l'espace nécessaire */
             margin-left: 8px;
-            left: -30px;
         }
 
             .nav-link:hover {
                 background: #007bff;
                 color: white !important;
-                transform: translateX(-15px); /* Décalage vers la gauche */
-                /* Solution alternative si translateX ne fonctionne pas : */
-                /* position: relative;
-            left: -8px; */
+                transform: translateX(8px);
             }
 
                 .nav-link:hover::before {
                     content: '';
                     position: absolute;
-                    /* Placer la barre à droite après le décalage */
                     left: -15px;
                     top: 0;
                     height: 100%;
@@ -68,12 +323,6 @@
                     background: #007bff;
                     border-radius: 4px;
                 }
-
-        /* Garantir que le parent permet le débordement */
-        .nav-items-container {
-            overflow: visible !important;
-            padding-left: 8px; /* Créer de l'espace à gauche */
-        }
 
         .profile-section {
             padding: 1rem 1.5rem;
@@ -95,7 +344,6 @@
             margin-top: 10px;
         }
 
-
         .user-info {
             margin-top: -0.5rem;
         }
@@ -108,34 +356,85 @@
 
         .nav-items-container {
             flex: 1;
-            overflow-y: auto;
-            
             padding: 1rem 0.25rem;
+            overflow-y: auto;
+        }
+
+        .navbar-toggler {
+            position: fixed;
+            left: 15px;
+            top: 15px;
+            z-index: 1050;
+            border: 2px solid #007bff;
+            padding: 0.5rem 0.75rem;
+            display: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 123, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
         @@media (max-width: 992px) {
             .custom-sidebar {
-                left: -300px;
-                transition: 0.3s all;
+                transform: translateX(-100%);
+                height: 100vh;
+                top: 0;
             }
 
                 .custom-sidebar.active {
-                    left: 0;
+                    transform: translateX(0);
                 }
 
             body {
                 margin-left: 0 !important;
+                padding-top: 80px;
             }
+
+            .navbar-toggler {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+                padding: 15px;
+            }
+
+            .profile-section {
+                padding-top: 2rem;
+            }
+
+            .navbar-brand {
+                padding: 1rem;
+            }
+
+            .nav-link {
+                margin-left: 0 !important;
+                padding: 15px;
+            }
+        }
+
+        @@media (min-width: 993px) {
+            .custom-sidebar {
+                transform: translateX(0) !important;
+            }
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.5);
         }
     </style>
 </head>
 <body style="margin-left: 300px;">
+    <!-- Hamburger Menu Button -->
+    <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Sidebar -->
     <nav class="navbar navbar-expand-lg navbar-light custom-sidebar">
         <div class="container-fluid d-flex flex-column h-100">
-            <!-- En-tête -->
+            <!-- Header Section -->
             <div>
-               
-
                 <div class="profile-section">
                     <div class="profile-icon">
                         <i class="fas fa-user"></i>
@@ -144,9 +443,8 @@
                     {
                         <div class="user-info">
                             <span class="username">@username</span>
-                            
+                            <div><small style="color: green">Connecté</small></div>
                         </div>
-                        <div><small  style= "color: green">Connecté</small></div>
                     }
                 </div>
                 <a class="navbar-brand" asp-controller="Auth" asp-action="Dashboard">
@@ -154,62 +452,85 @@
                 </a>
             </div>
 
-            <!-- Liens de navigation -->
+            <!-- Navigation Links -->
             <div class="nav-items-container">
-                <div class="collapse navbar-collapse" id="sidebarCollapse">
-                    <ul class="navbar-nav flex-column w-100">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center"
-                               asp-controller="Auth" asp-action="Dashboard">
-                                <i class="fas fa-home me-3 fs-4"></i>
-                                Accueil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center"
-                               asp-controller="formations" asp-action="List">
-                                <i class="fas fa-book-open me-3 fs-4"></i>
-                                Formations
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center"
-                               asp-controller="Auth" asp-action="ListUsers">
-                                <i class="fas fa-book-open me-3 fs-4"></i>
-                                Utilisateurs
-                            </a>
-                        </li>
-                        <li class="nav-item mt-auto">
-                            <a href="javascript:void(0);"
-                               class="nav-link text-danger fs-5 py-3 d-flex align-items-center"
-                               onclick="document.getElementById('logoutForm').submit();">
-                                <i class="fas fa-sign-out-alt me-3 fs-4"></i>
-                                Déconnexion
-                            </a>
-                        </li>
+                <ul class="navbar-nav flex-column w-100">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center"
+                           asp-controller="Auth" asp-action="Dashboard">
+                            <i class="fas fa-home me-3 fs-4"></i>
+                            Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center"
+                           asp-controller="formations" asp-action="List">
+                            <i class="fas fa-book-open me-3 fs-4"></i>
+                            Formations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 py-3 d-flex align-items-center"
+                           asp-controller="Auth" asp-action="ListUsers">
+                            <i class="fas fa-users me-3 fs-4"></i>
+                            Utilisateurs
+                        </a>
+                    </li>
+                    <li class="nav-item mt-auto">
+                        <a href="javascript:void(0);"
+                           class="nav-link text-danger fs-5 py-3 d-flex align-items-center"
+                           onclick="document.getElementById('logoutForm').submit();">
+                            <i class="fas fa-sign-out-alt me-3 fs-4"></i>
+                            Déconnexion
+                        </a>
+                    </li>
 
-                        <form id="logoutForm" asp-controller="Auth" asp-action="Logout" method="post" style="display:none;">
-                            @if (!string.IsNullOrEmpty(token))
-                            {
-                                <input type="hidden" name="Token" value="@token" />
-                            }
-                        </form>
-
-                    </ul>
-                </div>
+                    <form id="logoutForm" asp-controller="Auth" asp-action="Logout" method="post" style="display:none;">
+                        @if (!string.IsNullOrEmpty(token))
+                        {
+                            <input type="hidden" name="Token" value="@token" />
+                        }
+                    </form>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Contenu principal -->
-    <main class="container mt-3">
+    <!-- Main Content -->
+    <main class="container mt-3 main-content">
         @RenderBody()
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Activation des liens
+            // Toggle sidebar
+            document.querySelector('.navbar-toggler').addEventListener('click', function () {
+                document.querySelector('.custom-sidebar').classList.toggle('active');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function (e) {
+                const sidebar = document.querySelector('.custom-sidebar');
+                const isMobile = window.innerWidth <= 992;
+
+                if (isMobile &&
+                    !sidebar.contains(e.target) &&
+                    !e.target.closest('.navbar-toggler')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // Auto-close sidebar on link click (mobile)
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 992) {
+                        document.querySelector('.custom-sidebar').classList.remove('active');
+                    }
+                });
+            });
+
+            // Update active link
             const currentPath = window.location.pathname;
             document.querySelectorAll('.nav-link').forEach(link => {
                 if (link.getAttribute('href') === currentPath) {
@@ -217,25 +538,15 @@
                 }
             });
 
-            // Toggle sidebar mobile
-            document.querySelector('.navbar-toggler').addEventListener('click', function () {
-                document.querySelector('.custom-sidebar').classList.toggle('active');
-            });
-
-            // Fermeture automatique en mobile
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth < 992) {
-                        document.querySelector('.custom-sidebar').classList.remove('active');
-                    }
-                });
+            // Handle window resize
+            window.addEventListener('resize', function () {
+                const sidebar = document.querySelector('.custom-sidebar');
+                if (window.innerWidth > 992) {
+                    sidebar.classList.remove('active');
+                }
             });
         });
-       
-
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

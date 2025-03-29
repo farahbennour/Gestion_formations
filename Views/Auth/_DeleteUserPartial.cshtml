@@ -1,0 +1,16 @@
+﻿@model Gestion_Formations.Models.User
+
+<form id="deleteForm" asp-action="DeleteUser" method="post">
+    <input type="hidden" asp-for="Id" />
+    @Html.AntiForgeryToken()
+
+    <div class="text-center">
+        <p class="lead">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+        <p><strong>@Model.Username</strong> (@Model.Email)</p>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    </div>
+</form>

@@ -11,20 +11,197 @@
 <link rel="stylesheet" href="~/css/style.css" />
 
 
-<h2>Bienvenue sur le Dashboard</h2>
+<div class="container-fluid">
+    <!-- Welcome message fixed at top -->
+    <div class="fixed-top text-center " >
+       
+        @if (!string.IsNullOrEmpty(username))
+        {
+            <h2 class="fw-bold text-primary mb-0">Bonjour, @username !</h2>
+        }
+            <h2 class="mb-0 fw-bold" >
+            Bienvenue sur le Dashboard
+        </h2>
+    </div>
+ 
+    @* <p>Token dans la session : @HttpContextAccessor.HttpContext?.Session.GetString("Token")</p> *@
 
-@if (!string.IsNullOrEmpty(username))
-{
-    <p>Bonjour, @username !</p>
-}
-@* <p>Token dans la session : @HttpContextAccessor.HttpContext?.Session.GetString("Token")</p> *@
+    @* <p>Ceci est votre tableau de bord, où vous pouvez gérer vos informations.</p> *@
 
-<p>Ceci est votre tableau de bord, où vous pouvez gérer vos informations.</p>
+    <div class="row g-4">
+        <!-- Carte Formateurs -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-sm border-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3 bg-primary text-white rounded-circle p-3">
+                            <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                        </div>
+                        <div>
+                            <h5 class="card-title text-muted mb-1">Formateurs</h5>
+                            <h2 class="mb-0">@Model.FormateursCount</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<form asp-controller="Auth" asp-action="Logout" method="post">
-    @if (!string.IsNullOrEmpty(token))
-    {
-        <input type="hidden" name="Token" value="@token" />
+        <!-- Carte Apprenants -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-sm border-success">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3 bg-success text-white rounded-circle p-3">
+                            <i class="fas fa-user-graduate fa-2x"></i>
+                        </div>
+                        <div>
+                            <h5 class="card-title text-muted mb-1">Apprenants</h5>
+                            <h2 class="mb-0">@Model.ApprenantsCount</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte Formations -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-sm border-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3 bg-info text-white rounded-circle p-3">
+                            <i class="fas fa-book-open fa-2x"></i>
+                        </div>
+                        <div>
+                            <h5 class="card-title text-muted mb-1">Formations</h5>
+                            <h2 class="mb-0">@Model.FormationsCount</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Autres contenus du dashboard... -->
+</div>
+
+<style>
+    .card {
+        border-radius: 15px;
+        transition: transform 0.3s;
     }
-    <button type="submit" class="btn btn-danger">Déconnexion</button>
-</form>
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .border-primary {
+        border-left: 4px solid #4e73df !important;
+    }
+
+    .border-success {
+        border-left: 4px solid #1cc88a !important;
+    }
+
+    .border-info {
+        border-left: 4px solid #36b9cc !important;
+    }
+
+    .rounded-circle {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .fixed-top {
+        display: ;
+        align-items:center;
+        top: 30px;
+        left:300px;
+        right: 0px;
+        z-index: 1030;
+        padding: 15px 0;
+    }
+
+    .text-primary {
+        color: #4e73df !important;
+        font-size: 2rem;
+    }
+    /* Responsive pour tablettes */
+    @@media (max-width: 992px) {
+        .fixed-top {
+            left: 0;
+            padding: 10px 0;
+        }
+
+        .text-primary {
+            font-size: 1.5rem;
+        }
+
+        .rounded-circle {
+            width: 50px;
+            height: 50px;
+        }
+
+        .fa-2x {
+            font-size: 1.5em !important;
+        }
+    }
+
+    /* Responsive pour mobiles */
+    @@media (max-width: 768px) {
+        .fixed-top {
+            position: relative !important;
+            top: 0 !important;
+            margin-bottom: 20px;
+        }
+
+        h2.fw-bold {
+            font-size: 1.8rem;
+            margin-bottom: 15px !important;
+        }
+
+        .card {
+            margin-bottom: 1rem;
+        }
+
+        .rounded-circle {
+            width: 40px;
+            height: 40px;
+            padding: 0.8rem !important;
+        }
+
+        .fa-2x {
+            font-size: 1.2em !important;
+        }
+
+        .card-title {
+            font-size: 1rem !important;
+        }
+
+        .card h2 {
+            font-size: 1.5rem !important;
+        }
+    }
+
+    /* Petit écrans < 576px */
+    @@media (max-width: 576px) {
+        h2.fw-bold {
+            font-size: 1.5rem;
+        }
+
+        .text-primary {
+            font-size: 1.2rem !important;
+        }
+
+        .rounded-circle {
+            width: 35px;
+            height: 35px;
+        }
+    }
+
+   
+
+   
+</style>
