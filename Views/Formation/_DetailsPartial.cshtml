@@ -13,6 +13,27 @@
 
         <dt class="col-sm-4">Date et Heure:</dt>
         <dd class="col-sm-8">@Model.Date_Heure.ToString("d")</dd>
+
+        <dt class="col-sm-4">Prix:</dt>
+        <dd class="col-sm-8">@Model.Prix DT</dd>
+        <dt class="col-sm-4">Lieu:</dt>
+        <dd class="col-sm-8">@Model.Lieu</dd>
+        <dt class="col-sm-4">Formateur:</dt>
+        <dd class="col-sm-8">
+            @if (Model.Users.Any(u => u.Role == "Formateur"))
+            {
+                foreach (var formateur in Model.Users.Where(u => u.Role == "Formateur"))
+                {
+                    <span>@formateur.Username</span>
+
+                    <br />
+                }
+            }
+            else
+            {
+                <span>Aucun formateur</span>
+            }
+        </dd>
     </dl>
 
 </div>

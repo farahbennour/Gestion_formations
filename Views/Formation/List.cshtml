@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Gestion_Formations.Models.Formation>
+
 @{
     Layout = "~/Views/Shared/_AdminNavbar.cshtml";
     ViewData["Title"] = "List";
@@ -8,7 +9,7 @@
     <h1 class="mb-4 fw-bold text-primary" style="text-align:center; padding-top: 10px; padding-bottom: 20px;">Liste des formations</h1>
 
     <p>
-        <button class="btn btn-primary" onclick="showCreateModal()" style="font-size: 1.5rem; ">Créer</button>
+        <button class="btn btn-primary" onclick="showCreateModal()" style="font-size: 1.5rem; margin-left:1%;">Créer</button>
     </p>
 
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -42,6 +43,10 @@
                                     <th>@Html.DisplayNameFor(model => model.First().Nom)</th>
                                     <th>@Html.DisplayNameFor(model => model.First().Description)</th>
                                     <th>@Html.DisplayNameFor(model => model.First().Date_Heure)</th>
+                                    <th>@Html.DisplayNameFor(model => model.First().Prix)</th>
+                                    <th>@Html.DisplayNameFor(model => model.First().Lieu)</th>
+                                    <th>Formateurs</th>
+
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -53,12 +58,29 @@
                                         <td>@Html.DisplayFor(modelItem => item.Nom)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Date_Heure)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Prix) DT</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Lieu)</td>
+                                        <td>
+                                            @if (item.Users.Any(u => u.Role == "Formateur"))
+                                            {
+                                                foreach (var formateur in item.Users.Where(u => u.Role == "Formateur"))
+                                                {
+                                                    <span>@formateur.Username</span>
+
+                                                    <br />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>Aucun formateur</span>
+                                            }
+                                        </td>
                                         <td>
                                             <button class="btn btn-warning btn-sm btn-action" data-action="Details" data-id="@item.Id" data-toggle="modal" data-target="#actionModal" style="font-size: 1.2rem;">
-                                                Détails
+                                                <i class="fas fa-eye"></i>
                                             </button>
                                             <button class="btn btn-info btn-sm btn-action" data-action="Modifier" data-id="@item.Id" data-toggle="modal" data-target="#actionModal" style="font-size: 1.2rem;">
-                                                Modifier
+                                                <i class="fas fa-sync-alt"></i>
                                             </button>
                                             @* <form action="/formations/Delete" method="post" style="display:inline;"> *@
                                             @*     <input type="hidden" name="userId" value="@item.Id" /> *@
@@ -68,7 +90,7 @@
                                             @* </form> *@
                                             <button class="btn btn-danger btn-sm btn-action" data-action="Supprimer" data-id="@item.Id"
                                                     style="font-size: 1.2rem;">
-                                                <i class="fas fa-trash-alt" style="margin: 2px"></i>Supprimer
+                                                <i class="fas fa-trash-alt" style="margin: 2px"></i>
                                             </button>
 
                                         </td>
@@ -198,10 +220,8 @@
         font-size: 1.2rem; /* Augmenter la taille du texte */
     }
 
-        .table th, .table td {
-            padding: 12px; /* Augmenter l'espacement */
-        }
-
+        
+       
     .card {
         border-radius: 0.75rem;
         border: none;
@@ -214,7 +234,7 @@
     }
 
     .table th, .table td {
-        padding: 12px; /* Augmenter l'espacement */
+        padding: 10px; /* Augmenter l'espacement */
     }
 
     .table thead th {

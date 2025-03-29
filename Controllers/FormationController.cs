@@ -28,7 +28,8 @@ namespace Gestion_Formations.Controllers
         //}
         public IActionResult List()
         {
-            var formations = _context.Formations.ToList(); // Assurez-vous que _context n'est pas null
+            var formations = _context.Formations.Include(f => f.Users) // Inclure les utilisateurs liés
+        .ToList(); // Assurez-vous que _context n'est pas null
             return View(formations);
         }
 
@@ -45,7 +46,7 @@ namespace Gestion_Formations.Controllers
         [HttpPost("create")]
         //[ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Nom,Description,Date_Heure")] Formation formation)
+        public async Task<IActionResult> Create([Bind("Id,Nom,Description,Date_Heure,Prix,Lieu")] Formation formation)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +128,7 @@ namespace Gestion_Formations.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-            [Bind("Id,Nom,Description,Date_Heure")] Formation formation,
+            [Bind("Id,Nom,Description,Date_Heure,Prix,Lieu")] Formation formation,
             List<int> selectedFormateurs)
         {
             var existingFormation = await _context.Formations
@@ -138,6 +139,8 @@ namespace Gestion_Formations.Controllers
             existingFormation.Nom = formation.Nom;
             existingFormation.Description = formation.Description;
             existingFormation.Date_Heure = formation.Date_Heure;
+            existingFormation.Prix = formation.Prix;
+            existingFormation.Lieu = formation.Lieu;
 
             // Gestion des formateurs
             var selectedIds = selectedFormateurs ?? new List<int>();
@@ -161,16 +164,11 @@ namespace Gestion_Formations.Controllers
         }
 
 
-
-
-
-
-
-
         [HttpGet("details/{id}")]
         public async Task<IActionResult> Details(int id)
         {
-            var formation = await _context.Formations.FindAsync(id);
+            var formation = await _context.Formations.Include(f => f.Users)
+                .FirstOrDefaultAsync(f => f.Id == id); ;
             if (formation == null)
             {
                 return NotFound();
