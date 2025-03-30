@@ -1,4 +1,5 @@
 ﻿using Gestion_Formations.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Gestion_Formations.Repertoires
 
         public void Update(User user)
         {
-            _context.Users.Update(user);
+            _context.Entry(user).State = EntityState.Modified;
             _context.SaveChanges();
         }
         public void Delete(User userId)

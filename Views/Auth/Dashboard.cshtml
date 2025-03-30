@@ -8,7 +8,7 @@
     var username = HttpContextAccessor.HttpContext?.Session.GetString("Username");
     var token = HttpContextAccessor.HttpContext?.Session.GetString("Token");
 }
-<link rel="stylesheet" href="~/css/style.css" />
+@* <link rel="stylesheet" href="~/css/style.css" /> *@
 
 
 <div class="container-fluid">
@@ -86,6 +86,7 @@
 
 <style>
     .card {
+        margin-top:40%;
         border-radius: 15px;
         transition: transform 0.3s;
     }
@@ -185,21 +186,10 @@
         }
     }
 
-    /* Petit écrans < 576px */
-    @@media (max-width: 576px) {
-        h2.fw-bold {
-            font-size: 1.5rem;
-        }
-
-        .text-primary {
-            font-size: 1.2rem !important;
-        }
-
-        .rounded-circle {
-            width: 35px;
-            height: 35px;
-        }
+    body {
+        background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%);
     }
+
 
    
 

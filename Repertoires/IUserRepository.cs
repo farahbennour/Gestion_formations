@@ -10,6 +10,5 @@ namespace Gestion_Formations.Repertoires
         void Add(User user);
         void Update(User user);
         void Delete(User user);
-
     }
 }

@@ -156,6 +156,7 @@ public IActionResult Dashboard()
         public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Remove("Token");
+            Console.WriteLine("Token");
             HttpContext.Session.Remove("Username");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Auth");
@@ -290,7 +291,105 @@ public IActionResult Dashboard()
            
 
         }
-      
+
+        [Authorize]
+        [HttpGet("edit-profile")]
+        public IActionResult EditProfile()
+        {
+            // Récupération de l'email via le claim approprié
+            var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
+            Console.WriteLine($"GET - Email récupéré : {userEmail}");
+
+            if (string.IsNullOrEmpty(userEmail)) return Unauthorized();
+
+            var user = _userRepository.GetByEmail(userEmail);
+            if (user == null)
+            {
+                Console.WriteLine("GET - Utilisateur non trouvé en base");
+                return NotFound();
+            }
+
+            var model = new RegisterModel
+            {
+                Username = user.Username,
+                Email = user.Email,
+                Telephone = user.Telephone,
+                Adresse = user.Adresse,
+                DateNaissance = user.DateNaissance,
+                Role = user.Role,
+                Specialite = user.Role == "Formateur" ? user.Specialite : null,
+                Experience = user.Role == "Formateur" ? user.Experience : null,
+                Status = user.Status
+            };
+
+            return View(model);
+        }
+
+        [HttpPost("edit-profile")]
+        public IActionResult EditProfile(RegisterModel model)
+        {
+            Console.WriteLine("Début traitement POST");
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.SelectMany(x => x.Value.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine($"Erreur validation: {error.ErrorMessage}");
+                }
+                return View(model);
+            }
+
+            try
+            {
+                var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
+                Console.WriteLine($"POST - Email récupéré : {userEmail}");
+
+                var user = _userRepository.GetByEmail(userEmail);
+                if (user == null)
+                {
+                    Console.WriteLine("POST - Utilisateur introuvable");
+                    return NotFound();
+                }
+
+                // Mise à jour des champs
+                user.Username = model.Username;
+                user.Telephone = model.Telephone;
+                user.Adresse = model.Adresse;
+                user.DateNaissance = model.DateNaissance;
+
+                // Gestion mot de passe
+                if (!string.IsNullOrEmpty(model.NewPassword))
+                {
+                    user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+                    Console.WriteLine("Mot de passe mis à jour");
+                }
+
+                // Mise à jour formateur
+                if (user.Role == "Formateur")
+                {
+                    user.Specialite = model.Specialite;
+                    user.Experience = model.Experience;
+                }
+
+                // Sauvegarde
+                _userRepository.Update(user);
+                Console.WriteLine("Utilisateur sauvegardé");
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERREUR CRITIQUE: {ex.Message}");
+                ModelState.AddModelError("", "Une erreur technique est survenue");
+                return View(model);
+            }
+        }
+
+
+
+
+
         public class UsersListViewModel
         {
             public List<User> Formateurs { get; set; }
@@ -310,10 +409,11 @@ public IActionResult Dashboard()
             public string Username { get; set; }
             public string Email { get; set; }
             public string PasswordHash { get; set; }
+            public string NewPassword { get; set; }
             public string Telephone { get; set; }
             public string Adresse { get; set; }
-            public DateOnly DateNaissance { get; set; }
-            public DateOnly DateInscription { get; set; }
+            public DateOnly? DateNaissance { get; set; }
+            public DateOnly? DateInscription { get; set; }
             public DateOnly? DateEmbauche { get; set; }
             public string Role { get; set; }
             public string Specialite { get; set; }

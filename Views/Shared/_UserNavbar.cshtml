@@ -1,0 +1,172 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var token = HttpContextAccessor.HttpContext?.Session.GetString("Token");
+    var username = HttpContextAccessor.HttpContext?.Session.GetString("Username");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gestion_Formations</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Gestion_Formations.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Gestion_Formations</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Acceuil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="Privacy">Formations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="EditProfile">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:void(0);"
+                               class="nav-link text-dark"
+                               onclick="document.getElementById('logoutForm').submit();">
+                                Déconnexion
+                            </a>
+                        </li>
+                        <form id="logoutForm" asp-controller="Auth" asp-action="Logout" method="post" style="display:none;">
+                            @if (!string.IsNullOrEmpty(token))
+                            {
+                                <input type="hidden" name="Token" value="@token" />
+                            }
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @* <footer class="border-top footer text-muted"> *@
+    @*     <div class="container"> *@
+    @*         &copy; 2025 - Gestion_Formations - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+    @*     </div> *@
+    @* </footer> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Enhanced Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+            .navbar .container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 1.5rem;
+            }
+
+        .navbar-brand {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+                transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .nav-link:hover {
+                color: #2563eb;
+            }
+
+                .nav-link:hover::after {
+                    width: 100%;
+                }
+
+            /* Active state */
+            .nav-link.active {
+                color: #3b82f6;
+                font-weight: 600;
+            }
+
+                .nav-link.active::after {
+                    width: 100%;
+                }
+
+        /* Responsive adjustments */
+        @@media (max-width: 768px) {
+            .navbar-nav
+
+        {
+            gap: 1.2rem;
+        }
+
+        .nav-link {
+            font-size: 0.9rem;
+        }
+
+        }
+    </style>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

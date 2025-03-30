@@ -1,20 +1,36 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@{
+    Layout = "~/Views/Shared/_UserNavbar.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*
+@{
+    ViewData["Title"] = "Home Page";
+    var username = HttpContextAccessor.HttpContext?.Session.GetString("Username");
+    var token = HttpContextAccessor.HttpContext?.Session.GetString("Token");
+}
+<link rel="stylesheet" href="~/css/style.css" />
+
+
+
+    <!-- Welcome message fixed at top -->
+    <div >
+
+        @if (!string.IsNullOrEmpty(username))
+        {
+            <h2 class="fw-bold text-primary mb-0">Bonjour, @username !</h2>
+        }
+        <h2 class="mb-0 fw-bold">
+            Bienvenue
+        </h2>
+    </div>
+
     @if (ViewContext.HttpContext.Session.GetString("Token") != null)
 
     {
-        <form asp-controller="Auth" asp-action="Logout" method="post">
+        <form asp-controller="Auth" asp-action="logout" method="post">
             <button type="submit" class="btn btn-danger">Déconnexion</button>
            
         </form>
-        <form asp-controller="formations" asp-action="create" method="post">
-            <button type="submit" class="btn btn-danger">Formation</button>
-
-        </form>
+       
     }
-</div>
+

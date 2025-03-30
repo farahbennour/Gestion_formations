@@ -221,7 +221,6 @@ C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\scopedcss\projectbundle\Gestion_Formations.bundle.scp.css
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\2cjqalyv1j-3y8m7uxm6z.gz
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\whs341wzpx-61n19gt1b8.gz
-C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\izie6l3pc3-xtxxf3hu2r.gz
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\ce56law4nk-bqjiyaj88i.gz
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\izscaz2juu-c2jlpeoesf.gz
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\g40kyk2pnj-erw9l3u2r3.gz
@@ -298,5 +297,6 @@ C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\Gestion_Formations.pdb
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\Gestion_Formations.genruntimeconfig.cache
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\ref\Gestion_Formations.dll
-C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\mqnj61te0f-vnh1m8upf9.gz
 C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\izie6l3pc3-ilpt457fnm.gz
+C:\Users\Lenovo\source\repos\Gestion_Formations\Gestion_Formations\obj\Debug\net9.0\compressed\mqnj61te0f-c98i1q05yt.gz

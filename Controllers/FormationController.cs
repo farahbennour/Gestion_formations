@@ -146,11 +146,11 @@ namespace Gestion_Formations.Controllers
             var selectedIds = selectedFormateurs ?? new List<int>();
             var currentIds = existingFormation.Users.Select(u => u.Id).ToList();
 
-            // Supprimer les formateurs désélectionnés
-            foreach (var user in existingFormation.Users.Where(u => !selectedIds.Contains(u.Id)).ToList())
-            {
-                existingFormation.Users.Remove(user);
-            }
+            //// Supprimer les formateurs désélectionnés
+            //foreach (var user in existingFormation.Users.Where(u => !selectedIds.Contains(u.Id)).ToList())
+            //{
+            //    existingFormation.Users.Remove(user);
+            //}
 
             // Ajouter les nouveaux formateurs
             foreach (var userId in selectedIds.Where(id => !currentIds.Contains(id)))

@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Modifier mon profil";
+}
+<link rel="stylesheet" href="~/css/style.css" /> <!-- Inclure ton fichier CSS -->
+@if (Model != null)
+{
+    <h2>Modifier mon profil</h2>
+
+    <form method="post" action="edit-profile">
+        <div class="form-group">
+            <label for="Username">Nom d'utilisateur</label>
+            <input type="text" id="Username" name="Username" class="form-control" value="@Model.Username" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Adresse Email</label>
+            <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="Telephone">Téléphone</label>
+            <input type="text" id="Telephone" name="Telephone" class="form-control" value="@Model.Telephone" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Adresse">Adresse</label>
+            <input type="text" id="Adresse" name="Adresse" class="form-control" value="@Model.Adresse" required />
+        </div>
+
+        <div class="form-group">
+            <label for="DateNaissance">Date de naissance</label>
+            <input type="date" id="DateNaissance" name="DateNaissance" class="form-control" value="@Model.DateNaissance.ToString("yyyy-MM-dd")" required />
+        </div>
+
+        @if (Model.Role == "Formateur")
+        {
+            <div class="form-group">
+                <label for="Specialite">Spécialité</label>
+                <input type="text" id="Specialite" name="Specialite" class="form-control" value="@Model.Specialite" />
+            </div>
+
+            <div class="form-group">
+                <label for="Experience">Expérience (années)</label>
+                <input type="number" id="Experience" name="Experience" class="form-control" value="@Model.Experience" />
+            </div>
+        }
+
+        <div class="form-group">
+            <label for="PasswordHash">Nouveau mot de passe</label>
+            <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" placeholder="Laisser vide pour ne pas changer" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    </form>
+}
+else
+{
+    <p class="text-danger">Une erreur est survenue. Impossible de charger les informations du profil.</p>
+}
