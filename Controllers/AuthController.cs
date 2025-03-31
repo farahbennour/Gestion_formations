@@ -109,27 +109,39 @@ public IActionResult Dashboard()
         public IActionResult Signup([FromForm] RegisterModel model)
         {
             if (model == null)
-                return BadRequest("Les informations de l'utilisateur sont manquantes.");
+        return BadRequest("Model is null");
 
-            if (string.IsNullOrEmpty(model.Role))
-                return BadRequest("Le rôle est obligatoire.");
+    // Validation générale
+    if (string.IsNullOrEmpty(model.Role))
+        ModelState.AddModelError(nameof(model.Role), "Le rôle est obligatoire");
 
-            if (string.IsNullOrEmpty(model.Username) ||
-                string.IsNullOrEmpty(model.Email) ||
-                string.IsNullOrEmpty(model.PasswordHash) ||
-                string.IsNullOrEmpty(model.Telephone))
-                return BadRequest("Tous les champs obligatoires doivent être remplis.");
+    if (string.IsNullOrEmpty(model.Username))
+        ModelState.AddModelError(nameof(model.Username), "Le nom d'utilisateur est obligatoire");
 
-            if (!IsValidEmail(model.Email))
-                return BadRequest("L'email n'est pas valide.");
+    if (!IsValidEmail(model.Email))
+        ModelState.AddModelError(nameof(model.Email), "Email invalide");
 
-            // Validation du mot de passe : min 8 caractères, au moins une lettre, un chiffre et un symbole
-            if (!Regex.IsMatch(model.PasswordHash, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
-                return BadRequest("Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
+    if (!Regex.IsMatch(model.PasswordHash, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
+        ModelState.AddModelError(nameof(model.PasswordHash), "Mot de passe invalide");
 
-            // Validation du téléphone : doit contenir exactement 8 chiffres
-            if (!Regex.IsMatch(model.Telephone, @"^\d{8}$"))
-                return BadRequest("Le numéro de téléphone doit contenir exactement 8 chiffres.");
+    if (!Regex.IsMatch(model.Telephone, @"^\d{8}$"))
+        ModelState.AddModelError(nameof(model.Telephone), "Téléphone invalide");
+
+    // Validation spécifique aux formateurs
+    if (model.Role == "Formateur")
+    {
+        if (string.IsNullOrEmpty(model.Specialite))
+            ModelState.AddModelError(nameof(model.Specialite), "Spécialité requise");
+
+        if (model.Experience < 0)
+            ModelState.AddModelError(nameof(model.Experience), "Expérience invalide");
+
+        if (model.DateEmbauche == null)
+            ModelState.AddModelError(nameof(model.DateEmbauche), "Date d'embauche requise");
+    }
+
+    if (!ModelState.IsValid)
+        return View(model);
 
             var user = new User
             {
@@ -362,7 +374,7 @@ public IActionResult Dashboard()
                 Email = user.Email,
                 Telephone = user.Telephone,
                 Adresse = user.Adresse,
-                DateNaissance = user.DateNaissance,
+                //DateNaissance = user.DateNaissance,
                 Role = user.Role,
                 Specialite = user.Role == "Formateur" ? user.Specialite : null,
                 Experience = user.Role == "Formateur" ? user.Experience : null,
@@ -374,46 +386,133 @@ public IActionResult Dashboard()
         }
 
 
+        // [HttpPost("edit-profile")]
+        // public IActionResult EditProfile(RegisterModel model)
+        // {
+        //     // Vérifier si le modèle est null
+        //     if (model == null)
+        //     {
+        //         ModelState.AddModelError(string.Empty, "Les données du formulaire sont invalides");
+        //         return View(new RegisterModel()); // Retourner un modèle vide ou gérer l'erreur
+        //     }
+
+        //     var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
+        //     var user = _userRepository.GetByEmail(userEmail);
+
+        //     // Vérifier si l'utilisateur existe
+        //     if (user == null)
+        //     {
+        //         Console.WriteLine("Utilisateur non trouvé lors de la mise à jour");
+        //         return NotFound();
+        //     }
+
+        //     // Validation manuelle pour Formateur
+        //     if (user.Role == "Formateur" && string.IsNullOrEmpty(model.Specialite))
+        //     {
+        //         ModelState.AddModelError("Specialite", "La spécialité est requise pour les formateurs");
+        //     }
+
+
+        //     if (!string.IsNullOrEmpty(model.NewPassword) &&
+        //!Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
+        //     {
+        //         ModelState.AddModelError(nameof(model.NewPassword), "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
+        //         Console.WriteLine("Erreur ajoutée : " + ModelState["NewPassword"]?.Errors.FirstOrDefault()?.ErrorMessage);
+        //     }
+
+        //     foreach (var state in ModelState)
+        //     {
+        //         Console.WriteLine($"Clé : {state.Key}, Erreurs : {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
+        //     }
+
+
+        //     if (ModelState.IsValid)
+        //     {
+        //         // Réhydrater les champs manquants pour la vue
+        //         model.Role = user.Role;
+        //         model.Email = user.Email;
+        //         //model.DateNaissance = user.DateNaissance; // Important pour conserver la date
+        //         Console.WriteLine("ModelState invalide, retour à la vue");
+
+        //         return View(model);
+        //     }
+        //     Console.WriteLine("ModelState valide, mise à jour en base");
+
+
+        //     // Mise à jour des propriétés
+        //     user.Username = model.Username;
+        //     user.Telephone = model.Telephone;
+        //     user.Adresse = model.Adresse;
+        //     //user.DateNaissance = model.DateNaissance;
+
+        //     // Gestion du mot de passe
+        //     if (!string.IsNullOrEmpty(model.NewPassword))
+        //     {
+        //         user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+        //     }
+
+        //     // Mise à jour conditionnelle pour Formateur
+        //     if (user.Role == "Formateur")
+        //     {
+        //         user.Specialite = model.Specialite;
+        //         user.Experience = model.Experience ?? 0; // Gérer les null avec une valeur par défaut
+        //     }
+
+        //     _userRepository.Update(user);
+
+        //     return RedirectToAction("Index", "Home");
+        // }
+
+
         [HttpPost("edit-profile")]
         public IActionResult EditProfile(RegisterModel model)
         {
-            // Vérifier si le modèle est null
             if (model == null)
             {
-                ModelState.AddModelError(string.Empty, "Les données du formulaire sont invalides");
-                return View(new RegisterModel()); // Retourner un modèle vide ou gérer l'erreur
+                ModelState.AddModelError(string.Empty, "Les données du formulaire sont invalides.");
+                return View(new RegisterModel());
             }
 
             var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
             var user = _userRepository.GetByEmail(userEmail);
 
-            // Vérifier si l'utilisateur existe
             if (user == null)
             {
-                Console.WriteLine("Utilisateur non trouvé lors de la mise à jour");
+                Console.WriteLine("Utilisateur non trouvé.");
                 return NotFound();
             }
 
-            // Validation manuelle pour Formateur
-            if (user.Role == "Formateur" && string.IsNullOrEmpty(model.Specialite))
+            // Validation du mot de passe (si rempli)
+            if (!string.IsNullOrEmpty(model.NewPassword))
             {
-                ModelState.AddModelError("Specialite", "La spécialité est requise pour les formateurs");
-            }
-            // Vérification de la validité du mot de passe
-            if (!string.IsNullOrEmpty(model.NewPassword) && !Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
-            {
-                ModelState.AddModelError("NewPassword", "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
+                if (!Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
+                {
+                    ModelState.AddModelError(nameof(model.NewPassword), "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
+                }
             }
 
-
-
-            if (ModelState.IsValid)
+            // Empêcher la validation de "Specialite" si l'utilisateur N'EST PAS un formateur
+            if (user.Role != "Formateur")
             {
-                // Réhydrater les champs manquants pour la vue
+                ModelState.Remove(nameof(model.Specialite));
+            }
+
+            // Supprimer la validation de "PasswordHash" (ne devrait pas être requis dans le formulaire)
+            ModelState.Remove(nameof(model.PasswordHash));
+
+            // 🔍 Debug : Afficher toutes les erreurs de validation dans la console
+            Console.WriteLine("🔍 ---- DÉBUG ModelState ----");
+            foreach (var state in ModelState)
+            {
+                Console.WriteLine($"🟡 Clé : {state.Key}, Erreurs : {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
+            }
+            Console.WriteLine("🔍 --------------------------");
+
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("ModelState invalide, retour à la vue.");
                 model.Role = user.Role;
                 model.Email = user.Email;
-                model.DateNaissance = user.DateNaissance; // Important pour conserver la date
-
                 return View(model);
             }
 
@@ -421,29 +520,25 @@ public IActionResult Dashboard()
             user.Username = model.Username;
             user.Telephone = model.Telephone;
             user.Adresse = model.Adresse;
-            user.DateNaissance = model.DateNaissance;
 
             // Gestion du mot de passe
             if (!string.IsNullOrEmpty(model.NewPassword))
             {
                 user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
             }
-            // Validation du mot de passe : min 8 caractères, au moins une lettre, un chiffre et un symbole
-            if (!string.IsNullOrEmpty(model.NewPassword) && !Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
-            {
-                ModelState.AddModelError("NewPassword", "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
-            }
+
             // Mise à jour conditionnelle pour Formateur
             if (user.Role == "Formateur")
             {
                 user.Specialite = model.Specialite;
-                user.Experience = model.Experience ?? 0; // Gérer les null avec une valeur par défaut
+                user.Experience = model.Experience ?? 0;
             }
 
             _userRepository.Update(user);
-
+            Console.WriteLine("✅ Utilisateur mis à jour avec succès !");
             return RedirectToAction("Index", "Home");
         }
+
 
 
 

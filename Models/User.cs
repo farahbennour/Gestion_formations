@@ -15,6 +15,7 @@ namespace Gestion_Formations.Models
         public string PasswordHash { get; set; }
 
         [Required]
+        [StringLength(8)]
         public string? Telephone { get; set; }
 
         [Required]
