@@ -18,6 +18,8 @@
         <dd class="col-sm-8">@Model.Prix DT</dd>
         <dt class="col-sm-4">Lieu:</dt>
         <dd class="col-sm-8">@Model.Lieu</dd>
+        <dt class="col-sm-4">Nombre de Place:</dt>
+        <dd class="col-sm-8">@Model.NbPlace</dd>
         <dt class="col-sm-4">Formateur:</dt>
         <dd class="col-sm-8">
             @if (Model.Users.Any(u => u.Role == "Formateur"))

@@ -45,6 +45,7 @@
                                     <th>@Html.DisplayNameFor(model => model.First().Date_Heure)</th>
                                     <th>@Html.DisplayNameFor(model => model.First().Prix)</th>
                                     <th>@Html.DisplayNameFor(model => model.First().Lieu)</th>
+                                    <th>@Html.DisplayNameFor(model => model.First().NbPlace)</th>
                                     <th>Formateurs</th>
 
                                     <th>Actions</th>
@@ -60,6 +61,7 @@
                                         <td>@Html.DisplayFor(modelItem => item.Date_Heure)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Prix) DT</td>
                                         <td>@Html.DisplayFor(modelItem => item.Lieu)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.NbPlace)</td>
                                         <td>
                                             @if (item.Users.Any(u => u.Role == "Formateur"))
                                             {

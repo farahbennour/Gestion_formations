@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Gestion_Formations.Migrations
 {
     /// <inheritdoc />
-    public partial class FormationUser : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,7 +25,11 @@ namespace Gestion_Formations.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Date_Heure = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    Date_Heure = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Prix = table.Column<int>(type: "int", nullable: false),
+                    Lieu = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NbPlace = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

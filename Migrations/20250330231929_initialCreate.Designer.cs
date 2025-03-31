@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gestion_Formations.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250329010134_FormationUser")]
-    partial class FormationUser
+    [Migration("20250330231929_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,9 +50,19 @@ namespace Gestion_Formations.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Lieu")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("NbPlace")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Prix")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

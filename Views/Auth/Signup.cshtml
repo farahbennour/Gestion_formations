@@ -2,11 +2,13 @@
     ViewData["Title"] = "Signup";
 }
 <link rel="stylesheet" href="~/css/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 <h2>Signup</h2>
 
 <!-- Modal pour choisir le type d'utilisateur -->
 <div id="userTypeModal" class="modal" tabindex="-1" role="dialog" style="display: block;">
-    <div class="modal-overlay"></div> <!-- Superposition de fond -->
+    <div class="modal-overlay"></div> 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -37,12 +39,27 @@
         <input type="email" id="Email" name="Email" class="form-control" required />
     </div>
     <div class="form-group">
-        <label for="PasswordHash">Mot de passe</label>
-        <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" required />
+        <label>Nouveau mot de passe</label>
+        <div class="input-group">
+            <input type="password"
+                   id="PasswordHash"
+                   class="form-control"
+                   name="PasswordHash" />
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary"
+                        type="button"
+                        onclick="togglePasswordVisibility('PasswordHash')">
+                    <i class="bi bi-eye-slash"></i>
+                </button>
+            </div>
+        </div>
+        <span id="passwordError" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label for="Telephone">Téléphone</label>
         <input type="text" id="Telephone" name="Telephone" class="form-control" required />
+        <span id="telephoneError" class="text-danger"></span>
+
     </div>
     <div class="form-group">
         <label for="Adresse">Adresse</label>
@@ -53,7 +70,6 @@
         <input type="date" id="DateNaissance" name="DateNaissance" class="form-control" required />
     </div>
     <div class="form-group" id="dateEmbaucheField" style="display: none;">
-        @* <label for="DateInscription">Date Inscription</label> *@
         <input type="hidden" id="DateInscription" name="DateInscription" class="form-control" required />
     </div>
    
@@ -129,7 +145,48 @@
 
 </script>
 
+@section Scripts {
+    <script>
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const eyeIcon = passwordInput.nextElementSibling.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('bi-eye-slash');
+                eyeIcon.classList.add('bi-eye');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('bi-eye');
+                eyeIcon.classList.add('bi-eye-slash');
+            }
+        }
+    </script>
+}
+
 <style>
+
+    /* .form-control { */
+    /*     height: calc(2.25rem + 2px); /* Hauteur par défaut Bootstrap */ */
+    /* } */
+
+    .input-group-append {
+        height: 100%;
+    }
+
+        .input-group-append button {
+            height: 100%;
+           
+            padding: 5.5px 12px;
+            border: 1px solid #ced4da;
+            border-left: 0;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+
+            .input-group-append button:hover {
+                background-color: gray;
+            }
+
     .modal {
         position: fixed;
         top: 0;
@@ -137,8 +194,8 @@
         width: 100%;
         height: 100%;
         display: flex;
-        align-items: center; /* Centre verticalement */
-        justify-content: center; /* Centre horizontalement */
+        align-items: center;
+        justify-content: center; 
         z-index: 1000;
     }
 
@@ -148,7 +205,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+        background-color: rgba(0, 0, 0, 0.5); 
     }
 
     .modal-content {
@@ -157,10 +214,10 @@
         border-radius: 8px;
         z-index: 1001;
         width: 90%;
-        max-width: 400px; /* Largeur maximale pour les grands écrans */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+        max-width: 400px; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
         position: relative;
-        transform: translateX(+15%); /* Décalage de 20% vers la gauche */
+        transform: translateX(+15%); 
     }
 </style>
 

@@ -61,9 +61,83 @@ document.getElementById('signupForm').addEventListener('submit', function (e) {
         alert('Veuillez choisir un type d\'utilisateur.');
     }
 });
+µ
 
 
 
+
+    function validateForm(event) {
+    let password = document.getElementById("PasswordHash").value;
+    let newPassword = document.getElementById("newPassword").value;
+    let telephone = document.getElementById("Telephone").value;
+
+    let passwordError = document.getElementById("passwordError");
+    let newPasswordError = document.getElementById("newPasswordError");
+    let telephoneError = document.getElementById("telephoneError");
+
+    let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    let telephoneRegex = /^\d{8}$/;
+
+    let isValid = true;
+
+    // Réinitialiser les messages d'erreur
+    passwordError.innerText = "";
+    newPasswordError.innerText = "";
+    telephoneError.innerText = "";
+
+    // Vérification du mot de passe
+    if (!passwordRegex.test(password)) {
+        passwordError.innerText = "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.";
+    isValid = false;
+        }
+
+        // Vérification du nouveau mot de passe (s'il est rempli)
+        if (newPassword.length > 0 && !passwordRegex.test(newPassword)) {
+        newPasswordError.innerText = "Le nouveau mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.";
+    isValid = false;
+        }
+
+    // Vérification du téléphone
+    if (!telephoneRegex.test(telephone)) {
+        telephoneError.innerText = "Le numéro de téléphone doit contenir exactement 8 chiffres.";
+    isValid = false;
+    }
+
+    // Si une erreur existe, empêcher l'envoi
+    if (!isValid) {
+        event.preventDefault(); // Bloque la soumission
+        }
+
+    return isValid;
+}
+
+document.querySelector('form').addEventListener('submit', function (event) {
+    var password = document.getElementById('newPassword').value;
+    var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!passwordPattern.test(password)) {
+        alert('Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.');
+        event.preventDefault(); // Empêcher la soumission du formulaire
+    }
+});
+
+
+
+
+    function togglePasswordVisibility(inputId) {
+        const passwordInput = document.getElementById(inputId);
+    const eyeIcon = passwordInput.nextElementSibling.querySelector('i');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+    eyeIcon.classList.remove('bi-eye-slash');
+    eyeIcon.classList.add('bi-eye');
+        } else {
+        passwordInput.type = 'password';
+    eyeIcon.classList.remove('bi-eye');
+    eyeIcon.classList.add('bi-eye-slash');
+        }
+    }
 
 
 

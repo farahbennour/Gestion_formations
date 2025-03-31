@@ -46,7 +46,7 @@ namespace Gestion_Formations.Controllers
         [HttpPost("create")]
         //[ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Nom,Description,Date_Heure,Prix,Lieu")] Formation formation)
+        public async Task<IActionResult> Create([Bind("Id,Nom,Description,Date_Heure,Prix,Lieu,NbPlace")] Formation formation)
         {
             if (ModelState.IsValid)
             {
@@ -128,7 +128,7 @@ namespace Gestion_Formations.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-            [Bind("Id,Nom,Description,Date_Heure,Prix,Lieu")] Formation formation,
+            [Bind("Id,Nom,Description,Date_Heure,Prix,Lieu,NbPlace")] Formation formation,
             List<int> selectedFormateurs)
         {
             var existingFormation = await _context.Formations
@@ -141,6 +141,7 @@ namespace Gestion_Formations.Controllers
             existingFormation.Date_Heure = formation.Date_Heure;
             existingFormation.Prix = formation.Prix;
             existingFormation.Lieu = formation.Lieu;
+            existingFormation.NbPlace = formation.NbPlace;
 
             // Gestion des formateurs
             var selectedIds = selectedFormateurs ?? new List<int>();

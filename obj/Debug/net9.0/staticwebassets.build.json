@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ItnIGS2Qf/aCVUh4pkMCeS6GogdVmUqdABkC+xBiEzk=",
+  "Hash": "vkx69Al/sx7dt7IWashIgiSOKV2lTr86m1jADVdvp1c=",
   "Source": "Gestion_Formations",
   "BasePath": "_content/Gestion_Formations",
   "Mode": "Default",
@@ -752,12 +752,12 @@
       "OriginalItemSpec": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Identity": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-ilpt457fnm.gz",
+      "Identity": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-x5ka63swkj.gz",
       "SourceId": "Gestion_Formations",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Gestion_Formations",
-      "RelativePath": "js/site#[.{fingerprint=ilpt457fnm}]?.js.gz",
+      "RelativePath": "js/site#[.{fingerprint=x5ka63swkj}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -766,8 +766,8 @@
       "RelatedAsset": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\js\\site.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "cg25vxp6zs",
-      "Integrity": "rE4uDSC7LpgJ3g5kA8lYNQcEQ/+C4m+5jtw9Deh+XXo=",
+      "Fingerprint": "h1smmi855e",
+      "Integrity": "dVVQzJ0wqvdGsvFDyFHDmb562SjkObM+p/vfcPT8I14=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\js\\site.js"
@@ -878,12 +878,12 @@
       "OriginalItemSpec": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-c98i1q05yt.gz",
+      "Identity": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-lr7466dngu.gz",
       "SourceId": "Gestion_Formations",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Gestion_Formations",
-      "RelativePath": "css/style#[.{fingerprint=c98i1q05yt}]?.css.gz",
+      "RelativePath": "css/style#[.{fingerprint=lr7466dngu}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -892,8 +892,8 @@
       "RelatedAsset": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\css\\style.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "id7a55piva",
-      "Integrity": "KlNTYGrVBFPOMGNooMT3Xa+4sAsYOYkQNI02PIBKiPM=",
+      "Fingerprint": "yfxfnbayg1",
+      "Integrity": "Dvr8EzynkNV2S8VpAMCOG9y6/j8NFcTn0h0sSdD4HOI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\css\\style.css"
@@ -1459,8 +1459,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "c98i1q05yt",
-      "Integrity": "UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ=",
+      "Fingerprint": "lr7466dngu",
+      "Integrity": "US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\style.css"
@@ -1501,8 +1501,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "ilpt457fnm",
-      "Integrity": "KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo=",
+      "Fingerprint": "x5ka63swkj",
+      "Integrity": "lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
@@ -3068,13 +3068,13 @@
       ]
     },
     {
-      "Route": "css/style.c98i1q05yt.css",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-c98i1q05yt.gz",
+      "Route": "css/style.css",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-lr7466dngu.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000777000777"
+          "Quality": "0.000843881857"
         }
       ],
       "ResponseHeaders": [
@@ -3084,19 +3084,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1286"
+          "Value": "1184"
         },
         {
           "Name": "ETag",
-          "Value": "\"KlNTYGrVBFPOMGNooMT3Xa+4sAsYOYkQNI02PIBKiPM=\""
+          "Value": "\"Dvr8EzynkNV2S8VpAMCOG9y6/j8NFcTn0h0sSdD4HOI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 30 Mar 2025 03:31:24 GMT"
+          "Value": "Sun, 30 Mar 2025 03:46:33 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -3112,26 +3112,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ=\""
+          "Value": "W/\"US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "c98i1q05yt"
-        },
-        {
-          "Name": "label",
-          "Value": "css/style.css"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ="
+          "Value": "sha256-US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg="
         }
       ]
     },
     {
-      "Route": "css/style.c98i1q05yt.css",
+      "Route": "css/style.css",
       "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\css\\style.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -3141,7 +3133,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "6075"
+          "Value": "3275"
         },
         {
           "Name": "Content-Type",
@@ -3149,11 +3141,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ=\""
+          "Value": "\"US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 30 Mar 2025 03:31:24 GMT"
+          "Value": "Sun, 30 Mar 2025 03:46:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg="
+        }
+      ]
+    },
+    {
+      "Route": "css/style.css.gz",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-lr7466dngu.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1184"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Dvr8EzynkNV2S8VpAMCOG9y6/j8NFcTn0h0sSdD4HOI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 03:46:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Dvr8EzynkNV2S8VpAMCOG9y6/j8NFcTn0h0sSdD4HOI="
+        }
+      ]
+    },
+    {
+      "Route": "css/style.lr7466dngu.css",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-lr7466dngu.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000843881857"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1184"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Dvr8EzynkNV2S8VpAMCOG9y6/j8NFcTn0h0sSdD4HOI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 03:46:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lr7466dngu"
+        },
+        {
+          "Name": "label",
+          "Value": "css/style.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg="
+        }
+      ]
+    },
+    {
+      "Route": "css/style.lr7466dngu.css",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\css\\style.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3275"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 03:46:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3163,7 +3300,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "c98i1q05yt"
+          "Value": "lr7466dngu"
         },
         {
           "Name": "label",
@@ -3171,13 +3308,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ="
+          "Value": "sha256-US4gXZ4Juvxk/oKvcQJuG5Qx4NNmfge2pp3EBkg5TWg="
         }
       ]
     },
     {
-      "Route": "css/style.c98i1q05yt.css.gz",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-c98i1q05yt.gz",
+      "Route": "css/style.lr7466dngu.css.gz",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-lr7466dngu.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3186,7 +3323,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1286"
+          "Value": "1184"
         },
         {
           "Name": "Content-Type",
@@ -3194,11 +3331,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KlNTYGrVBFPOMGNooMT3Xa+4sAsYOYkQNI02PIBKiPM=\""
+          "Value": "\"Dvr8EzynkNV2S8VpAMCOG9y6/j8NFcTn0h0sSdD4HOI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 30 Mar 2025 03:31:24 GMT"
+          "Value": "Sun, 30 Mar 2025 03:46:33 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3216,7 +3353,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "c98i1q05yt"
+          "Value": "lr7466dngu"
         },
         {
           "Name": "label",
@@ -3224,144 +3361,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-KlNTYGrVBFPOMGNooMT3Xa+4sAsYOYkQNI02PIBKiPM="
-        }
-      ]
-    },
-    {
-      "Route": "css/style.css",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-c98i1q05yt.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000777000777"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1286"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KlNTYGrVBFPOMGNooMT3Xa+4sAsYOYkQNI02PIBKiPM=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 30 Mar 2025 03:31:24 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ="
-        }
-      ]
-    },
-    {
-      "Route": "css/style.css",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\css\\style.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "6075"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 30 Mar 2025 03:31:24 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-UIMIYCYkrDJ5ky/CUiPJkAvSPCBE4o+kyj+2QNET1xQ="
-        }
-      ]
-    },
-    {
-      "Route": "css/style.css.gz",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\mqnj61te0f-c98i1q05yt.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1286"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KlNTYGrVBFPOMGNooMT3Xa+4sAsYOYkQNI02PIBKiPM=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 30 Mar 2025 03:31:24 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-KlNTYGrVBFPOMGNooMT3Xa+4sAsYOYkQNI02PIBKiPM="
+          "Value": "sha256-Dvr8EzynkNV2S8VpAMCOG9y6/j8NFcTn0h0sSdD4HOI="
         }
       ]
     },
@@ -3688,7 +3688,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3741,7 +3741,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3778,7 +3778,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3825,7 +3825,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3886,7 +3886,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3931,7 +3931,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3986,7 +3986,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4047,7 +4047,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4092,7 +4092,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4147,7 +4147,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4200,7 +4200,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4237,7 +4237,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 27 Mar 2025 01:28:29 GMT"
+          "Value": "Mon, 31 Mar 2025 05:43:09 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4260,13 +4260,13 @@
       ]
     },
     {
-      "Route": "js/site.ilpt457fnm.js",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-ilpt457fnm.gz",
+      "Route": "js/site.js",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-x5ka63swkj.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.001358695652"
+          "Quality": "0.000704721635"
         }
       ],
       "ResponseHeaders": [
@@ -4276,19 +4276,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "735"
+          "Value": "1418"
         },
         {
           "Name": "ETag",
-          "Value": "\"rE4uDSC7LpgJ3g5kA8lYNQcEQ/+C4m+5jtw9Deh+XXo=\""
+          "Value": "\"dVVQzJ0wqvdGsvFDyFHDmb562SjkObM+p/vfcPT8I14=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 29 Mar 2025 21:23:22 GMT"
+          "Value": "Mon, 31 Mar 2025 06:24:01 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -4304,26 +4304,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo=\""
+          "Value": "W/\"lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "ilpt457fnm"
-        },
-        {
-          "Name": "label",
-          "Value": "js/site.js"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo="
+          "Value": "sha256-lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8="
         }
       ]
     },
     {
-      "Route": "js/site.ilpt457fnm.js",
+      "Route": "js/site.js",
       "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\js\\site.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -4333,7 +4325,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2646"
+          "Value": "5365"
         },
         {
           "Name": "Content-Type",
@@ -4341,11 +4333,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo=\""
+          "Value": "\"lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 29 Mar 2025 21:23:22 GMT"
+          "Value": "Mon, 31 Mar 2025 06:24:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.js.gz",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-x5ka63swkj.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1418"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dVVQzJ0wqvdGsvFDyFHDmb562SjkObM+p/vfcPT8I14=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 31 Mar 2025 06:24:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dVVQzJ0wqvdGsvFDyFHDmb562SjkObM+p/vfcPT8I14="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.x5ka63swkj.js",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-x5ka63swkj.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000704721635"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1418"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dVVQzJ0wqvdGsvFDyFHDmb562SjkObM+p/vfcPT8I14=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 31 Mar 2025 06:24:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "x5ka63swkj"
+        },
+        {
+          "Name": "label",
+          "Value": "js/site.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.x5ka63swkj.js",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5365"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 31 Mar 2025 06:24:01 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4355,7 +4492,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "ilpt457fnm"
+          "Value": "x5ka63swkj"
         },
         {
           "Name": "label",
@@ -4363,13 +4500,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo="
+          "Value": "sha256-lfbe/CpCrhhVYSFQvEt7udqAHqqWmMVYLmvrn+rSML8="
         }
       ]
     },
     {
-      "Route": "js/site.ilpt457fnm.js.gz",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-ilpt457fnm.gz",
+      "Route": "js/site.x5ka63swkj.js.gz",
+      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-x5ka63swkj.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4378,7 +4515,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "735"
+          "Value": "1418"
         },
         {
           "Name": "Content-Type",
@@ -4386,11 +4523,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"rE4uDSC7LpgJ3g5kA8lYNQcEQ/+C4m+5jtw9Deh+XXo=\""
+          "Value": "\"dVVQzJ0wqvdGsvFDyFHDmb562SjkObM+p/vfcPT8I14=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 29 Mar 2025 21:23:22 GMT"
+          "Value": "Mon, 31 Mar 2025 06:24:01 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4408,7 +4545,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "ilpt457fnm"
+          "Value": "x5ka63swkj"
         },
         {
           "Name": "label",
@@ -4416,144 +4553,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-rE4uDSC7LpgJ3g5kA8lYNQcEQ/+C4m+5jtw9Deh+XXo="
-        }
-      ]
-    },
-    {
-      "Route": "js/site.js",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-ilpt457fnm.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.001358695652"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "735"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"rE4uDSC7LpgJ3g5kA8lYNQcEQ/+C4m+5jtw9Deh+XXo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 29 Mar 2025 21:23:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo="
-        }
-      ]
-    },
-    {
-      "Route": "js/site.js",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\wwwroot\\js\\site.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2646"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 29 Mar 2025 21:23:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-KvEgLkq7CIHQ9ebAQhAQ8wsSlGcym69v9tcFqkq2THo="
-        }
-      ]
-    },
-    {
-      "Route": "js/site.js.gz",
-      "AssetFile": "C:\\Users\\Lenovo\\source\\repos\\Gestion_Formations\\Gestion_Formations\\obj\\Debug\\net9.0\\compressed\\izie6l3pc3-ilpt457fnm.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "735"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"rE4uDSC7LpgJ3g5kA8lYNQcEQ/+C4m+5jtw9Deh+XXo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 29 Mar 2025 21:23:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-rE4uDSC7LpgJ3g5kA8lYNQcEQ/+C4m+5jtw9Deh+XXo="
+          "Value": "sha256-dVVQzJ0wqvdGsvFDyFHDmb562SjkObM+p/vfcPT8I14="
         }
       ]
     },

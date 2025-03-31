@@ -2,11 +2,20 @@
     ViewData["Title"] = "Modifier mon profil";
 }
 <link rel="stylesheet" href="~/css/style.css" /> <!-- Inclure ton fichier CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 @if (Model != null)
 {
     <h2>Modifier mon profil</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @Html.ValidationSummary()
+        </div>
+    }
+    <form asp-controller="Auth" asp-action="EditProfile" method="post">
+        @Html.AntiForgeryToken() <!-- Ajouter cette ligne -->
 
-    <form method="post" action="edit-profile">
         <div class="form-group">
             <label for="Username">Nom d'utilisateur</label>
             <input type="text" id="Username" name="Username" class="form-control" value="@Model.Username" required />
@@ -16,6 +25,8 @@
             <label for="Email">Adresse Email</label>
             <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" readonly />
         </div>
+        <input type="hidden" id="Role" name="Role" value="@Model.Role" /> <!-- Important ! -->
+         <!-- Important ! -->
 
         <div class="form-group">
             <label for="Telephone">Téléphone</label>
@@ -31,7 +42,6 @@
             <label for="DateNaissance">Date de naissance</label>
             <input type="date" id="DateNaissance" name="DateNaissance" class="form-control" value="@Model.DateNaissance.ToString("yyyy-MM-dd")" required />
         </div>
-
         @if (Model.Role == "Formateur")
         {
             <div class="form-group">
@@ -46,14 +56,56 @@
         }
 
         <div class="form-group">
-            <label for="PasswordHash">Nouveau mot de passe</label>
-            <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" placeholder="Laisser vide pour ne pas changer" />
+            <label>Nouveau mot de passe</label>
+            <div class="input-group">
+                <input type="password"
+                       id="newPassword"
+                       class="form-control"
+                       name="NewPassword">
+
+            
+           
+                <button class="btn btn-outline-secondary"
+                        type="button"
+                        onclick="togglePasswordVisibility('newPassword')">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+
         </div>
 
+
         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        <div style="padding-top : 2%;">
+        <input type="button" value="Annuler" class="btn btn-primary"  onclick="window.location.href='/Home/Index'" />
+        </div>
     </form>
 }
 else
 {
     <p class="text-danger">Une erreur est survenue. Impossible de charger les informations du profil.</p>
+}
+
+
+
+
+@section Scripts {
+    <script href="~/js/site.js">
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const eyeIcon = passwordInput.nextElementSibling.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('bi-eye-slash');
+                eyeIcon.classList.add('bi-eye');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('bi-eye');
+                eyeIcon.classList.add('bi-eye-slash');
+            }
+
+        }
+
+    </script>
 }

@@ -51,6 +51,9 @@ namespace Gestion_Formations.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("NbPlace")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("longtext");
