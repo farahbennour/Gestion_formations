@@ -131,6 +131,7 @@ namespace Gestion_Formations.Controllers
             [Bind("Id,Nom,Description,Date_Heure,Prix,Lieu,NbPlace")] Formation formation,
             List<int> selectedFormateurs)
         {
+
             var existingFormation = await _context.Formations
                 .Include(f => f.Users)
                 .FirstOrDefaultAsync(f => f.Id == id);

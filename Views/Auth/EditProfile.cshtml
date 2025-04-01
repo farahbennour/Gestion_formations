@@ -27,6 +27,7 @@
         <div class="form-group">
             <label for="Telephone">Téléphone</label>
             <input type="text" id="Telephone" name="Telephone" class="form-control" value="@Model.Telephone" required />
+            <span asp-validation-for="Telephone" class="text-danger"></span>
         </div>
 
         <div class="form-group">
@@ -48,30 +49,35 @@
             </div>
         }
 
-        <div class="form-group">
-            <label>Nouveau mot de passe</label>
-            <div class="input-group">
-                <input type="password"
-                       id="newPassword"
-                       class="form-control"
-                       name="NewPassword">
+        @* <div class="form-group"> *@
+        @*     <label>Nouveau mot de passe</label> *@
+        @*     <div class="input-group"> *@
+        @*         <input type="password" *@
+        @*                id="newPassword" *@
+        @*                class="form-control" *@
+        @*                name="NewPassword"> *@
 
             
            
-                <button class="btn btn-outline-secondary"
-                        type="button"
-                        onclick="togglePasswordVisibility('newPassword')">
-                    <i class="bi bi-eye"></i>
-                </button>
-            </div>
-            <span asp-validation-for="NewPassword" class="text-danger"></span>
-        </div>
+        @*         <button class="btn btn-outline-secondary" *@
+        @*                 type="button" *@
+        @*                 onclick="togglePasswordVisibility('newPassword')"> *@
+        @*             <i class="bi bi-eye"></i> *@
+        @*         </button> *@
+        @*     </div> *@
+        @*     <span asp-validation-for="NewPassword" class="text-danger"></span> *@
+        @* </div> *@
 
 
         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+
         <div style="padding-top : 2%;">
         <input type="button" value="Annuler" class="btn btn-primary"  onclick="window.location.href='/Home/Index'" />
         </div>
+        <div style="padding-top : 2%;">
+            <input type="button" value="Changer Mot de passe" class="btn btn-primary" onclick="window.location.href='/auth/change-password'" />
+        </div>
+
     </form>
 }
 else

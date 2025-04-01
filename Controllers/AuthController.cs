@@ -32,133 +32,74 @@
             return View();
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet("Dashboard")]
-        //public IActionResult Dashboard()
-        //{
-        //    var user = HttpContext.User;
-        //    var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
-        //    Console.WriteLine("Rôles de l'utilisateur : " + string.Join(", ", roles));
-        //    return View();
-        //}
        [Authorize(Roles = "Admin")]
-[HttpGet("Dashboard")]
-public IActionResult Dashboard()
-{
-    var dashboardData = new DashboardViewModel
-    {
-        FormateursCount = _context.Users.Count(u => u.Role == "Formateur"),
-        ApprenantsCount = _context.Users.Count(u => u.Role == "Apprenant"),
-        FormationsCount = _context.Formations.Count()
-    };
+       [HttpGet("Dashboard")]
+       public IActionResult Dashboard()
+            {
+                var dashboardData = new DashboardViewModel
+                     {
+                         FormateursCount = _context.Users.Count(u => u.Role == "Formateur"),
+                         ApprenantsCount = _context.Users.Count(u => u.Role == "Apprenant"),
+                         FormationsCount = _context.Formations.Count()
+                       };
 
     return View(dashboardData);
 }
 
-        public class DashboardViewModel
-        {
-            public int FormateursCount { get; set; }
-            public int ApprenantsCount { get; set; }
-            public int FormationsCount { get; set; }
-        }
-
-        //[HttpPost("signup")]
-        //public IActionResult Signup([FromForm] RegisterModel model)
-        //{
-        //    if (model == null)
-        //        return BadRequest("Les informations de l'utilisateur sont manquantes.");
-
-        //    // Ajouter la validation du rôle
-        //    if (string.IsNullOrEmpty(model.Role))
-        //        return BadRequest("Le rôle est obligatoire.");
-
-        //    if (string.IsNullOrEmpty(model.Username) ||
-        //        string.IsNullOrEmpty(model.Email) ||
-        //        string.IsNullOrEmpty(model.PasswordHash))
-        //        return BadRequest("Tous les champs obligatoires doivent être remplis.");
-
-        //    if (!IsValidEmail(model.Email))
-        //        return BadRequest("L'email n'est pas valide.");
-
-        //    var user = new User
-        //    {
-        //        Username = model.Username,
-        //        Role = model.Role.Trim(), // Maintenant garanti de ne pas être null
-        //        Email = model.Email,
-        //        Telephone = model.Telephone ?? "",
-        //        Adresse = model.Adresse ?? "",
-        //        DateNaissance = model.DateNaissance,
-        //        DateInscription = DateOnly.FromDateTime(DateTime.Today), // Date actuelle
-        //        DateEmbauche = model.Role == "Formateur"
-        //? model.DateEmbauche
-        //: null,
-        //        Specialite = model.Specialite ?? "",
-        //        Experience = model.Experience ?? 0,
-        //        Status = model.Role == "Formateur"
-        //? (model.Status ?? "En Cours de Traitement")
-        //: ""
-        //    };
-
-        //    if (!_authService.RegisterUser(user, model.PasswordHash))
-        //        return BadRequest("L'utilisateur existe déjà.");
-
-        //    return RedirectToAction("Login");
-        //}
-
         [HttpPost("signup")]
         public IActionResult Signup([FromForm] RegisterModel model)
         {
-            Console.WriteLine("🔍 [Signup] Début de la méthode Signup.");
+            Console.WriteLine(" [Signup] Début de la méthode Signup.");
 
             if (model == null)
             {
-                Console.WriteLine("❌ [Signup] Le modèle est null.");
+                Console.WriteLine(" [Signup] Le modèle est null.");
                 ModelState.AddModelError(string.Empty, "Les informations de l'utilisateur sont manquantes.");
                 return View(model);
             }
 
-            Console.WriteLine("🔍 [Signup] Modèle reçu pour l'utilisateur : " + model.Username);
+            Console.WriteLine(" [Signup] Modèle reçu pour l'utilisateur : " + model.Username);
 
             
 
             if (string.IsNullOrEmpty(model.Username))
             {
-                Console.WriteLine("❌ [Signup] Le nom d'utilisateur est manquant.");
+                Console.WriteLine(" [Signup] Le nom d'utilisateur est manquant.");
                 ModelState.AddModelError(nameof(model.Username), "Le nom d'utilisateur est obligatoire.");
             }
 
             if (string.IsNullOrEmpty(model.Email))
             {
-                Console.WriteLine("❌ [Signup] L'email est manquant.");
+                Console.WriteLine(" [Signup] L'email est manquant.");
                 ModelState.AddModelError(nameof(model.Email), "L'email est obligatoire.");
             }
 
             if (string.IsNullOrEmpty(model.PasswordHash))
             {
-                Console.WriteLine("❌ [Signup] Le mot de passe est manquant.");
+                Console.WriteLine(" [Signup] Le mot de passe est manquant.");
                 ModelState.AddModelError(nameof(model.PasswordHash), "Le mot de passe est obligatoire.");
             }
 
             if (string.IsNullOrEmpty(model.Telephone))
             {
-                Console.WriteLine("❌ [Signup] Le numéro de téléphone est manquant.");
+                Console.WriteLine(" [Signup] Le numéro de téléphone est manquant.");
                 ModelState.AddModelError(nameof(model.Telephone), "Le numéro de téléphone est obligatoire.");
             }
 
             if (!IsValidEmail(model.Email))
             {
-                Console.WriteLine("❌ [Signup] L'email n'est pas valide : " + model.Email);
+                Console.WriteLine(" [Signup] L'email n'est pas valide : " + model.Email);
                 ModelState.AddModelError(nameof(model.Email), "L'email n'est pas valide.");
             }
 
-            // Validation du mot de passe : min 8 caractères, au moins une lettre, un chiffre et un symbole
+            
             if (!Regex.IsMatch(model.PasswordHash, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
             {
                 Console.WriteLine("❌ [Signup] Le mot de passe ne respecte pas les règles de sécurité.");
                 ModelState.AddModelError(nameof(model.PasswordHash), "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
             }
 
-            // Validation du téléphone : doit contenir exactement 8 chiffres
+          
             if (!Regex.IsMatch(model.Telephone, @"^\d{8}$"))
             {
                 Console.WriteLine("❌ [Signup] Le numéro de téléphone est invalide : " + model.Telephone);
@@ -169,8 +110,7 @@ public IActionResult Dashboard()
                 ModelState.Remove(nameof(model.Specialite));
             }
 
-            // Et si NewPassword n'est pas requis dans Signup, retirez-le également :
-            ModelState.Remove(nameof(model.NewPassword));
+         
 
 
             if (!ModelState.IsValid)
@@ -201,16 +141,16 @@ public IActionResult Dashboard()
                 Status = model.Role == "Formateur" ? (model.Status ?? "En Cours de Traitement") : ""
             };
 
-            Console.WriteLine("🔍 [Signup] Création de l'utilisateur : " + user.Username);
+            Console.WriteLine(" [Signup] Création de l'utilisateur : " + user.Username);
 
             if (!_authService.RegisterUser(user, model.PasswordHash))
             {
-                Console.WriteLine("❌ [Signup] L'utilisateur existe déjà.");
+                Console.WriteLine("[Signup] L'utilisateur existe déjà.");
                 ModelState.AddModelError(string.Empty, "L'utilisateur existe déjà.");
                 return View(model);
             }
 
-            Console.WriteLine("✅ [Signup] Utilisateur enregistré avec succès.");
+            Console.WriteLine(" [Signup] Utilisateur enregistré avec succès.");
             return RedirectToAction("Login");
         }
 
@@ -230,7 +170,7 @@ public IActionResult Dashboard()
             if (user == null)
                 return Unauthorized("Email ou mot de passe incorrect");
 
-            // Nettoyage du rôle
+          
             user.Role = user.Role?.Trim('\r', '\n', ' ');
             Console.WriteLine($"Rôle nettoyé : {user.Role}");
 
@@ -247,8 +187,7 @@ public IActionResult Dashboard()
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Role, user.Role) // Utilise le rôle nettoyé
-            };
+                new Claim(ClaimTypes.Role, user.Role) };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
@@ -282,21 +221,7 @@ public IActionResult Dashboard()
                        @"^[^@\s]+@[^@\s]+\.[^@\s]+$"
                    );
         }
-        //// Dans AuthController.cs
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet("users")]
-        //public IActionResult ListUsers()
-        //{
-        //    var allUsers = _userRepository.GetAll().ToList();
-
-        //    var viewModel = new UsersListViewModel
-        //    {
-        //        Formateurs = allUsers.Where(u => u.Role == "Formateur").ToList(),
-        //        Apprenants = allUsers.Where(u => u.Role == "Apprenant").ToList()
-        //    };
-
-        //    return View(viewModel);
-        //}
+   
 
 
 
@@ -307,7 +232,7 @@ public IActionResult Dashboard()
             var viewModel = new UsersListViewModel
             {
                 Formateurs = _context.Users
-                                  .Include(u => u.Formations) // Charge les relations
+                                  .Include(u => u.Formations)
                                   .Where(u => u.Role == "Formateur")
                                   .ToList(),
                 Apprenants = _context.Users
@@ -333,7 +258,7 @@ public IActionResult Dashboard()
                 return NotFound();
             }
 
-            // Synchronisation des formations
+        
             user.Formations = _context.Formations
                 .Where(f => formationIds.Contains(f.Id))
                 .ToList();
@@ -355,15 +280,15 @@ public IActionResult Dashboard()
 
             if (newStatus == "Rejeté")
             {
-                // Suppression du formateur
+             
                 _userRepository.Delete(user);
             }
             else
             {
-                // Mise à jour normale
+             
                 user.Status = newStatus;
 
-                // On ne met à jour la date d'embauche que pour le statut "Embauché"
+              
                 if (newStatus == "Embauché")
                 {
                     user.DateEmbauche = DateOnly.FromDateTime(DateTime.Today);
@@ -434,86 +359,9 @@ public IActionResult Dashboard()
             };
 
 
-            return View(model); // Vue normale pour les autres rôles
+            return View(model); 
         }
 
-
-        // [HttpPost("edit-profile")]
-        // public IActionResult EditProfile(RegisterModel model)
-        // {
-        //     // Vérifier si le modèle est null
-        //     if (model == null)
-        //     {
-        //         ModelState.AddModelError(string.Empty, "Les données du formulaire sont invalides");
-        //         return View(new RegisterModel()); // Retourner un modèle vide ou gérer l'erreur
-        //     }
-
-        //     var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
-        //     var user = _userRepository.GetByEmail(userEmail);
-
-        //     // Vérifier si l'utilisateur existe
-        //     if (user == null)
-        //     {
-        //         Console.WriteLine("Utilisateur non trouvé lors de la mise à jour");
-        //         return NotFound();
-        //     }
-
-        //     // Validation manuelle pour Formateur
-        //     if (user.Role == "Formateur" && string.IsNullOrEmpty(model.Specialite))
-        //     {
-        //         ModelState.AddModelError("Specialite", "La spécialité est requise pour les formateurs");
-        //     }
-
-
-        //     if (!string.IsNullOrEmpty(model.NewPassword) &&
-        //!Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
-        //     {
-        //         ModelState.AddModelError(nameof(model.NewPassword), "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
-        //         Console.WriteLine("Erreur ajoutée : " + ModelState["NewPassword"]?.Errors.FirstOrDefault()?.ErrorMessage);
-        //     }
-
-        //     foreach (var state in ModelState)
-        //     {
-        //         Console.WriteLine($"Clé : {state.Key}, Erreurs : {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
-        //     }
-
-
-        //     if (ModelState.IsValid)
-        //     {
-        //         // Réhydrater les champs manquants pour la vue
-        //         model.Role = user.Role;
-        //         model.Email = user.Email;
-        //         //model.DateNaissance = user.DateNaissance; // Important pour conserver la date
-        //         Console.WriteLine("ModelState invalide, retour à la vue");
-
-        //         return View(model);
-        //     }
-        //     Console.WriteLine("ModelState valide, mise à jour en base");
-
-
-        //     // Mise à jour des propriétés
-        //     user.Username = model.Username;
-        //     user.Telephone = model.Telephone;
-        //     user.Adresse = model.Adresse;
-        //     //user.DateNaissance = model.DateNaissance;
-
-        //     // Gestion du mot de passe
-        //     if (!string.IsNullOrEmpty(model.NewPassword))
-        //     {
-        //         user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
-        //     }
-
-        //     // Mise à jour conditionnelle pour Formateur
-        //     if (user.Role == "Formateur")
-        //     {
-        //         user.Specialite = model.Specialite;
-        //         user.Experience = model.Experience ?? 0; // Gérer les null avec une valeur par défaut
-        //     }
-
-        //     _userRepository.Update(user);
-
-        //     return RedirectToAction("Index", "Home");
-        // }
 
 
         [HttpPost("edit-profile")]
@@ -534,31 +382,26 @@ public IActionResult Dashboard()
                 return NotFound();
             }
 
-            // Validation du mot de passe (si rempli)
-            if (!string.IsNullOrEmpty(model.NewPassword))
+            if (!Regex.IsMatch(model.Telephone, @"^\d{8}$"))
             {
-                if (!Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
-                {
-                    ModelState.AddModelError(nameof(model.NewPassword), "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
-                }
+                Console.WriteLine("❌ [Signup] Le numéro de téléphone est invalide : " + model.Telephone);
+                ModelState.AddModelError(nameof(model.Telephone), "Le numéro de téléphone doit contenir exactement 8 chiffres.");
             }
+          
 
-            // Empêcher la validation de "Specialite" si l'utilisateur N'EST PAS un formateur
             if (user.Role != "Formateur")
             {
                 ModelState.Remove(nameof(model.Specialite));
             }
 
-            // Supprimer la validation de "PasswordHash" (ne devrait pas être requis dans le formulaire)
             ModelState.Remove(nameof(model.PasswordHash));
 
-            // 🔍 Debug : Afficher toutes les erreurs de validation dans la console
-            Console.WriteLine("🔍 ---- DÉBUG ModelState ----");
+            Console.WriteLine(" ---- DÉBUG ModelState ----");
             foreach (var state in ModelState)
             {
-                Console.WriteLine($"🟡 Clé : {state.Key}, Erreurs : {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
+                Console.WriteLine($"Clé : {state.Key}, Erreurs : {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
             }
-            Console.WriteLine("🔍 --------------------------");
+            Console.WriteLine(" --------------------------");
 
             if (!ModelState.IsValid)
             {
@@ -568,18 +411,13 @@ public IActionResult Dashboard()
                 return View(model);
             }
 
-            // Mise à jour des propriétés
+          
             user.Username = model.Username;
             user.Telephone = model.Telephone;
             user.Adresse = model.Adresse;
 
-            // Gestion du mot de passe
-            if (!string.IsNullOrEmpty(model.NewPassword))
-            {
-                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
-            }
-
-            // Mise à jour conditionnelle pour Formateur
+           
+   
             if (user.Role == "Formateur")
             {
                 user.Specialite = model.Specialite;
@@ -587,12 +425,142 @@ public IActionResult Dashboard()
             }
 
             _userRepository.Update(user);
-            Console.WriteLine("✅ Utilisateur mis à jour avec succès !");
+            Console.WriteLine(" Utilisateur mis à jour avec succès !");
             return RedirectToAction("Index", "Home");
         }
 
 
+        [HttpGet("change-password")]
+        public IActionResult ChangePassword()
+        {
+            var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
+            Console.WriteLine($"GET - Email récupéré : {userEmail}");
 
+            if (string.IsNullOrEmpty(userEmail))
+                return Unauthorized();
+
+            var user = _userRepository.GetByEmail(userEmail);
+            if (user == null)
+            {
+                Console.WriteLine("GET - Utilisateur non trouvé en base");
+                return NotFound();
+            }
+
+            var model = new ChangePasswordModel();
+            return View(model); // Retourne la vue du formulaire de changement de mot de passe
+        }
+
+
+        [HttpPost("change-password")]
+        public IActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (model == null)
+            {
+                ModelState.AddModelError(string.Empty, "Les données du formulaire sont invalides.");
+                return View(model);
+            }
+
+            var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
+            var user = _userRepository.GetByEmail(userEmail);
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Utilisateur non trouvé.");
+                return View(model);
+            }
+
+            // Vérification de l'ancien mot de passe (si requis)
+            if (!BCrypt.Net.BCrypt.Verify(model.OldPassword, user.PasswordHash))
+            {
+                ModelState.AddModelError(nameof(model.OldPassword), "L'ancien mot de passe est incorrect.");
+                return View(model);
+            }
+
+            // Vérification que le nouveau mot de passe est bien fourni
+            if (string.IsNullOrEmpty(model.NewPassword))
+            {
+                ModelState.AddModelError(nameof(model.NewPassword), "Le nouveau mot de passe est requis.");
+                return View(model);
+            }
+
+            // Validation du nouveau mot de passe
+            if (!Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
+            {
+                ModelState.AddModelError(nameof(model.NewPassword), "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
+                return View(model);
+            }
+
+            // Vérifier si l'ancien et le nouveau mot de passe sont identiques
+            if (BCrypt.Net.BCrypt.Verify(model.NewPassword, user.PasswordHash))
+            {
+                ModelState.AddModelError(nameof(model.NewPassword), "Le nouveau mot de passe doit être différent de l'ancien.");
+                return View(model);
+            }
+
+            // Hachage du nouveau mot de passe
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+            _userRepository.Update(user);
+            Console.WriteLine(" Mot de passe mis à jour avec succès !");
+        
+            TempData["SuccessMessage"] = "Mot de passe mis à jour avec succès.";
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("edit-profile-admin")]
+        public IActionResult EditProfileAdmin(ChangePasswordModel model)
+        {
+             if (model == null)
+            {
+                ModelState.AddModelError(string.Empty, "Les données du formulaire sont invalides.");
+                return View(model);
+            }
+
+            var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
+            var user = _userRepository.GetByEmail(userEmail);
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Utilisateur non trouvé.");
+                return View(model);
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(model.OldPassword, user.PasswordHash))
+            {
+                ModelState.AddModelError(nameof(model.OldPassword), "L'ancien mot de passe est incorrect.");
+                return View(model);
+            }
+
+            if (string.IsNullOrEmpty(model.NewPassword))
+            {
+                ModelState.AddModelError(nameof(model.NewPassword), "Le nouveau mot de passe est requis.");
+                return View(model);
+            }
+
+         
+            if (!Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
+            {
+                ModelState.AddModelError(nameof(model.NewPassword), "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
+                return View(model);
+            }
+
+       
+            if (BCrypt.Net.BCrypt.Verify(model.NewPassword, user.PasswordHash))
+            {
+                ModelState.AddModelError(nameof(model.NewPassword), "Le nouveau mot de passe doit être différent de l'ancien.");
+                return View(model);
+            }
+
+         
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+            _userRepository.Update(user);
+            Console.WriteLine(" Mot de passe mis à jour avec succès !");
+
+           
+            TempData["SuccessMessage"] = "Mot de passe mis à jour avec succès.";
+            return RedirectToAction("Dashboard", "Auth");
+        }
 
         [Authorize(Roles = "Admin")]
         [HttpGet("edit-profile-admin")]
@@ -610,77 +578,30 @@ public IActionResult Dashboard()
                 return NotFound();
             }
 
-            var model = new RegisterModel
+            var model = new ChangePasswordModel
             {
-                Username = user.Username,
-                Email = user.Email,
-                PasswordHash=user.PasswordHash,
+
+                NewPassword = user.PasswordHash,
 
             };
+            return View(model);
 
-            
-           
-                return View( model); // Retourne la vue spéciale admin
-           
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost("edit-profile-admin")]
-        public IActionResult EditProfileAdmin(RegisterModel model)
+
+
+        public class DashboardViewModel
         {
-            // Vérifier si le modèle est null
-            if (model == null)
-            {
-                ModelState.AddModelError(string.Empty, "Les données du formulaire sont invalides");
-                return View(new RegisterModel()); // Retourner un modèle vide ou gérer l'erreur
-            }
-
-            var userEmail = User.FindFirstValue(ClaimTypes.Email) ?? User.FindFirstValue(ClaimTypes.Name);
-            var user = _userRepository.GetByEmail(userEmail);
-
-            // Vérifier si l'utilisateur existe
-            if (user == null)
-            {
-                Console.WriteLine("Utilisateur non trouvé lors de la mise à jour");
-                return NotFound();
-            }
-
-           
-
-            if (ModelState.IsValid)
-            {
-                // Réhydrater les champs manquants pour la vue
-                model.Role = user.Role;
-                model.Email = user.Email;
-                return View(model);
-            }
-
-            // Mise à jour des propriétés
-           
-            user.Username = model.Username;
-            user.Email = model.Email;
-           
-
-            // Gestion du mot de passe
-            if (!string.IsNullOrEmpty(model.NewPassword))
-            {
-                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
-            }
-
-            _userRepository.Update(user);
-
-            return RedirectToAction("Dashboard", "Auth");
+            public int FormateursCount { get; set; }
+            public int ApprenantsCount { get; set; }
+            public int FormationsCount { get; set; }
         }
-
-
-
-
 
         public class UsersListViewModel
         {
             public List<User> Formateurs { get; set; }
             public List<User> Apprenants { get; set; }
-            public List<Formation> Formations { get; set; } // Nouvelle propriété
+            public List<Formation> Formations { get; set; } 
 
         }
 
@@ -695,7 +616,7 @@ public IActionResult Dashboard()
             public string Username { get; set; }
             public string Email { get; set; }
             public string PasswordHash { get; set; }
-            public string NewPassword { get; set; }
+            //public string NewPassword { get; set; }
             public string Telephone { get; set; }
             public string Adresse { get; set; }
             public DateOnly? DateNaissance { get; set; }
@@ -709,6 +630,14 @@ public IActionResult Dashboard()
         }
 
 
-       
+        public class ChangePasswordModel
+        {
+           
+           public string OldPassword { get; set; }
+            public string NewPassword { get; set; }
+        }
+
+
+
     }
 }
