@@ -28,6 +28,7 @@
                                     <th>Statut</th>
                                     <th>Date Embauche</th>
                                     <th>Actions</th>
+                                        <th>Expérience</th>
                                     <th>Formations</th>
                                 </tr>
                             </thead>
@@ -67,6 +68,7 @@
                                                 </button>
                                             </div>
                                         </td>
+                                            <td>@formateur.Experience</td>
                                         <td>
                                             <form asp-action="AssignFormations" method="post" class="d-inline-flex">
                                                 <input type="hidden" name="userId" value="@formateur.Id" />
@@ -81,12 +83,14 @@
                                                             </option>
                                                         }
                                                     </select>
+
                                                     <button type="submit" class="btn btn-success btn-sm">
                                                         <i class="fas fa-save"></i>
                                                     </button>
                                                 </div>
                                             </form>
                                         </td>
+                                       
                                     </tr>
                                 }
                             </tbody>
@@ -112,6 +116,7 @@
                                     <th>Email</th>
                                     <td>Date Inscription</td>
                                     <th>Adresse</th>
+                          
                                     <th>Actions</th>
                                 </tr>
                             </thead>

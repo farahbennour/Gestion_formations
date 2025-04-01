@@ -108,40 +108,83 @@ public IActionResult Dashboard()
         [HttpPost("signup")]
         public IActionResult Signup([FromForm] RegisterModel model)
         {
+            Console.WriteLine("🔍 [Signup] Début de la méthode Signup.");
+
             if (model == null)
-        return BadRequest("Model is null");
+            {
+                Console.WriteLine("❌ [Signup] Le modèle est null.");
+                ModelState.AddModelError(string.Empty, "Les informations de l'utilisateur sont manquantes.");
+                return View(model);
+            }
 
-    // Validation générale
-    if (string.IsNullOrEmpty(model.Role))
-        ModelState.AddModelError(nameof(model.Role), "Le rôle est obligatoire");
+            Console.WriteLine("🔍 [Signup] Modèle reçu pour l'utilisateur : " + model.Username);
 
-    if (string.IsNullOrEmpty(model.Username))
-        ModelState.AddModelError(nameof(model.Username), "Le nom d'utilisateur est obligatoire");
+            
 
-    if (!IsValidEmail(model.Email))
-        ModelState.AddModelError(nameof(model.Email), "Email invalide");
+            if (string.IsNullOrEmpty(model.Username))
+            {
+                Console.WriteLine("❌ [Signup] Le nom d'utilisateur est manquant.");
+                ModelState.AddModelError(nameof(model.Username), "Le nom d'utilisateur est obligatoire.");
+            }
 
-    if (!Regex.IsMatch(model.PasswordHash, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
-        ModelState.AddModelError(nameof(model.PasswordHash), "Mot de passe invalide");
+            if (string.IsNullOrEmpty(model.Email))
+            {
+                Console.WriteLine("❌ [Signup] L'email est manquant.");
+                ModelState.AddModelError(nameof(model.Email), "L'email est obligatoire.");
+            }
 
-    if (!Regex.IsMatch(model.Telephone, @"^\d{8}$"))
-        ModelState.AddModelError(nameof(model.Telephone), "Téléphone invalide");
+            if (string.IsNullOrEmpty(model.PasswordHash))
+            {
+                Console.WriteLine("❌ [Signup] Le mot de passe est manquant.");
+                ModelState.AddModelError(nameof(model.PasswordHash), "Le mot de passe est obligatoire.");
+            }
 
-    // Validation spécifique aux formateurs
-    if (model.Role == "Formateur")
-    {
-        if (string.IsNullOrEmpty(model.Specialite))
-            ModelState.AddModelError(nameof(model.Specialite), "Spécialité requise");
+            if (string.IsNullOrEmpty(model.Telephone))
+            {
+                Console.WriteLine("❌ [Signup] Le numéro de téléphone est manquant.");
+                ModelState.AddModelError(nameof(model.Telephone), "Le numéro de téléphone est obligatoire.");
+            }
 
-        if (model.Experience < 0)
-            ModelState.AddModelError(nameof(model.Experience), "Expérience invalide");
+            if (!IsValidEmail(model.Email))
+            {
+                Console.WriteLine("❌ [Signup] L'email n'est pas valide : " + model.Email);
+                ModelState.AddModelError(nameof(model.Email), "L'email n'est pas valide.");
+            }
 
-        if (model.DateEmbauche == null)
-            ModelState.AddModelError(nameof(model.DateEmbauche), "Date d'embauche requise");
-    }
+            // Validation du mot de passe : min 8 caractères, au moins une lettre, un chiffre et un symbole
+            if (!Regex.IsMatch(model.PasswordHash, @"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"))
+            {
+                Console.WriteLine("❌ [Signup] Le mot de passe ne respecte pas les règles de sécurité.");
+                ModelState.AddModelError(nameof(model.PasswordHash), "Le mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un symbole.");
+            }
 
-    if (!ModelState.IsValid)
-        return View(model);
+            // Validation du téléphone : doit contenir exactement 8 chiffres
+            if (!Regex.IsMatch(model.Telephone, @"^\d{8}$"))
+            {
+                Console.WriteLine("❌ [Signup] Le numéro de téléphone est invalide : " + model.Telephone);
+                ModelState.AddModelError(nameof(model.Telephone), "Le numéro de téléphone doit contenir exactement 8 chiffres.");
+            }
+            if (model.Role != "Formateur")
+            {
+                ModelState.Remove(nameof(model.Specialite));
+            }
+
+            // Et si NewPassword n'est pas requis dans Signup, retirez-le également :
+            ModelState.Remove(nameof(model.NewPassword));
+
+
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("❌ [Signup] ModelState invalide, erreurs relevées :");
+                foreach (var state in ModelState)
+                {
+                    foreach (var error in state.Value.Errors)
+                    {
+                        Console.WriteLine($" - {state.Key}: {error.ErrorMessage}");
+                    }
+                }
+                return View(model);
+            }
 
             var user = new User
             {
@@ -158,11 +201,20 @@ public IActionResult Dashboard()
                 Status = model.Role == "Formateur" ? (model.Status ?? "En Cours de Traitement") : ""
             };
 
-            if (!_authService.RegisterUser(user, model.PasswordHash))
-                return BadRequest("L'utilisateur existe déjà.");
+            Console.WriteLine("🔍 [Signup] Création de l'utilisateur : " + user.Username);
 
+            if (!_authService.RegisterUser(user, model.PasswordHash))
+            {
+                Console.WriteLine("❌ [Signup] L'utilisateur existe déjà.");
+                ModelState.AddModelError(string.Empty, "L'utilisateur existe déjà.");
+                return View(model);
+            }
+
+            Console.WriteLine("✅ [Signup] Utilisateur enregistré avec succès.");
             return RedirectToAction("Login");
         }
+
+
 
         [HttpGet("login")]
         public IActionResult Login()
