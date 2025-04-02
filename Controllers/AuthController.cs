@@ -25,6 +25,11 @@
             _userRepository = userRepository;
             _context = context;
         }
+        [HttpGet("index")]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         [HttpGet("signup")]
         public IActionResult Signup()
@@ -215,7 +220,7 @@
         public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Remove("Token");
-            Console.WriteLine("Token");
+            Console.WriteLine("Token expiré");
             HttpContext.Session.Remove("Username");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Auth");
@@ -434,7 +439,7 @@
 
             _userRepository.Update(user);
             Console.WriteLine(" Utilisateur mis à jour avec succès !");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Auth");
         }
 
 
@@ -511,7 +516,7 @@
             Console.WriteLine(" Mot de passe mis à jour avec succès !");
         
             TempData["SuccessMessage"] = "Mot de passe mis à jour avec succès.";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Auth");
         }
 
 
