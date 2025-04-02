@@ -1,16 +1,6 @@
-﻿@model Gestion_Formations.Models.Formation
-
-<div>
-    <h4>Êtes-vous sûr de vouloir supprimer ceci ?</h4>
-    @* <p class="text-danger">This action cannot be undone!</p> *@
-    <dl class="row">
-        <dt class="col-sm-4">Nom:</dt>
-        <dd class="col-sm-8">@Model.Nom</dd>
-    </dl>
-
-    <div class="text-right">
-        <button type="button" class="btn btn-danger" onclick="confirmDelete(@Model.Id)">
-            Confirmer la suppression
-        </button>        <input type="button" value="Annuler" class="btn btn-warning" data-dismiss="modal" onclick="window.location.href='/formations/List'" />
-    </div>
-</div>
+﻿<form asp-controller="formations" asp-action="ConfirmDelete" asp-route-id="@Model.Id" method="post">
+    @Html.AntiForgeryToken()
+    <p>Êtes-vous sûr de vouloir supprimer @Model.Nom ?</p>
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+    <a href="/formations" class="btn btn-secondary">Annuler</a>
+</form>

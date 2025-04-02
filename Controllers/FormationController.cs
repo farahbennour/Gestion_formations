@@ -43,19 +43,52 @@ namespace Gestion_Formations.Controllers
         }
 
         // POST: Formation/Create
+        //[HttpPost("create")]
+        ////[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> Create([Bind("Id,Nom,Description,Date_Heure,Prix,Lieu,NbPlace")] Formation formation)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(formation);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("List");
+        //    }
+        //    return View(""formation);
+        //}
         [HttpPost("create")]
-        //[ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Nom,Description,Date_Heure,Prix,Lieu,NbPlace")] Formation formation)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(formation);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("List");
+                if (ModelState.IsValid)
+                {
+                    _context.Add(formation);
+                    await _context.SaveChangesAsync();
+
+                    if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    {
+                        return Json(new { success = true });
+                    }
+
+                    return RedirectToAction("List"); // 🔹 Redirection si pas AJAX
+                }
+
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return PartialView("create", formation);
+                }
             }
-            return View();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur : {ex.Message}");
+                return PartialView("create", formation);
+            }
+
+            return RedirectToAction("List");
         }
+
 
         //// GET: Formation/Edit/5
         //[Authorize(Roles = "Admin")]
@@ -189,7 +222,7 @@ namespace Gestion_Formations.Controllers
             return PartialView("_DeletePartial", formation);
         }
 
-        [HttpPost("delete/{id}")]
+        [HttpPost("Supprimer/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmDelete(int id)
         {

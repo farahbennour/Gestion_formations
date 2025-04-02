@@ -146,7 +146,7 @@
             if (!_authService.RegisterUser(user, model.PasswordHash))
             {
                 Console.WriteLine("[Signup] L'utilisateur existe déjà.");
-                ModelState.AddModelError(string.Empty, "L'utilisateur existe déjà.");
+                ModelState.AddModelError("UserExistsError", "L'utilisateur existe déjà.");
                 return View(model);
             }
 
@@ -167,17 +167,25 @@
         {
             var user = _userRepository.GetByEmail(model.Email);
 
-            if (user == null)
-                return Unauthorized("Email ou mot de passe incorrect");
+           
 
           
             user.Role = user.Role?.Trim('\r', '\n', ' ');
             Console.WriteLine($"Rôle nettoyé : {user.Role}");
 
             var token = _authService.Authenticate(model.Email, model.Password);
+            //if (user == null)
+            //{
+            //    return View(model); // Retourne la vue Login avec l'erreur
+            //}
 
+            
             if (token == null)
-                return Unauthorized("Email ou mot de passe incorrect");
+            {
+          
+                ModelState.AddModelError("PasswordError", "Mot de passe incorrect");
+                return View(model); // Retourne la vue Login avec l'erreur
+            }
 
             HttpContext.Session.SetString("Username", user.Username);
             Console.WriteLine($"Username : {user.Username}");
@@ -200,7 +208,7 @@
 
             return user.Role == "Admin"
                 ? RedirectToAction("Dashboard", "Auth")
-                : RedirectToAction("Index", "Home");
+                : RedirectToAction("Index", "Auth");
         }
 
         [HttpPost("logout")]

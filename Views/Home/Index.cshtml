@@ -1,23 +1,16 @@
-﻿@inject IHttpContextAccessor HttpContextAccessor
-@{
-    Layout = "~/Views/Shared/_UserNavbar.cshtml";
-}
+﻿
 
 @{
     ViewData["Title"] = "Home Page";
-    var username = HttpContextAccessor.HttpContext?.Session.GetString("Username");
-    var token = HttpContextAccessor.HttpContext?.Session.GetString("Token");
+    
 }
 <link rel="stylesheet" href="~/css/style.css" />
 
 
 
     <div >
-
-        @if (!string.IsNullOrEmpty(username))
-        {
-            <h2>Bienvenue, @username !</h2>
-        }
+    <h2> <a href="auth/Login">Bienvenue</a></h2>
+        
         
     </div>
 

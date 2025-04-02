@@ -35,6 +35,15 @@
 <!-- Formulaire d'inscription -->
 
 <form asp-controller="Auth" asp-action="Signup" method="post" id="signupForm" style="display: none;">
+    @if (!string.IsNullOrEmpty(ViewData.ModelState["UserExistsError"]?.Errors.FirstOrDefault()?.ErrorMessage))
+    {
+        <div class="alert alert-danger fw-bold" role="alert">
+            @Html.ValidationMessage("UserExistsError", new { @class = "mb-0" })
+        </div>
+    }
+
+
+
 
     <div class="form-group">
         <label for="Username">Nom d'utilisateur</label>
@@ -94,6 +103,7 @@
     </div>
     <input type="hidden" id="Role" name="Role" />
     <button type="submit" class="btn btn-primary">S'inscrire</button>
+
 </form>
 
 <p>Déjà un compte ? <a href="/Auth/Login">Connectez-vous ici</a></p>
