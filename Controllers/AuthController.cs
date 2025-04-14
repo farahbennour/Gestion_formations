@@ -189,7 +189,7 @@
             {
           
                 ModelState.AddModelError("PasswordError", "Mot de passe incorrect");
-                return View(model); // Retourne la vue Login avec l'erreur
+                return View(model); 
             }
 
             HttpContext.Session.SetString("Username", user.Username);

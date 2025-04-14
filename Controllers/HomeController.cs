@@ -15,7 +15,7 @@ namespace Gestion_Formations.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("login", "Auth");
         }
 
         public IActionResult Privacy()

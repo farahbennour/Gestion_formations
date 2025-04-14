@@ -21,15 +21,14 @@ namespace Gestion_Formations.Controllers
 
         [HttpGet("List")]
         [Authorize(Roles = "Admin")]
-        // GET: Formation
+        
         //public async Task<IActionResult> Index()
         //{
         //    return View("~/Views/Formation/Index.cshtml");
         //}
         public IActionResult List()
         {
-            var formations = _context.Formations.Include(f => f.Users) // Inclure les utilisateurs liés
-        .ToList(); // Assurez-vous que _context n'est pas null
+            var formations = _context.Formations.Include(f => f.Users).ToList(); 
             return View(formations);
         }
 
@@ -177,17 +176,17 @@ namespace Gestion_Formations.Controllers
             existingFormation.Lieu = formation.Lieu;
             existingFormation.NbPlace = formation.NbPlace;
 
-            // Gestion des formateurs
+           
             var selectedIds = selectedFormateurs ?? new List<int>();
             var currentIds = existingFormation.Users.Select(u => u.Id).ToList();
 
-            //// Supprimer les formateurs désélectionnés
+         
             //foreach (var user in existingFormation.Users.Where(u => !selectedIds.Contains(u.Id)).ToList())
             //{
             //    existingFormation.Users.Remove(user);
             //}
 
-            // Ajouter les nouveaux formateurs
+          
             foreach (var userId in selectedIds.Where(id => !currentIds.Contains(id)))
             {
                 var user = await _context.Users.FindAsync(userId);
